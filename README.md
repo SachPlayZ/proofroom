@@ -2,7 +2,7 @@
 
 Private pre-diligence screening for small SaaS acquisitions.
 
-> Local demo release. Preprod, GitHub, X, and pilot evidence links are tracked in [`docs/release-links.md`](docs/release-links.md) and are intentionally not fabricated.
+> Local demo release. [Public GitHub repository](https://github.com/SachPlayZ/proofroom). Preprod, X, and pilot evidence links are tracked in [`docs/release-links.md`](docs/release-links.md) and are intentionally not fabricated.
 
 ProofRoom lets a seller prove that a business meets a buyer's screening policy and lets the buyer prove available funds. The exact metrics, balance, identities, and data-room contents remain private; the public receipt contains only commitments, qualification outcomes, and an encrypted dossier hash.
 
@@ -60,6 +60,8 @@ The current MVP does not implement escrow, acquisition settlement, custom shield
 ## CI/CD
 
 `.github/workflows/ci.yml` runs `npm ci`, tests, the production build, Compact compilation, and publishes a Pages artifact. A push to `main` deploys the frontend to GitHub Pages after verification. Enable GitHub Pages with **GitHub Actions** as its source, then copy the generated URL to `docs/release-links.md`.
+
+[View the CI/CD workflow](https://github.com/SachPlayZ/proofroom/actions/workflows/ci.yml)
 
 ## Preprod handoff
 

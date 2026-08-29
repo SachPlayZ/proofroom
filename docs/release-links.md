@@ -4,10 +4,10 @@ Replace each pending value only after it resolves publicly. Do not publish place
 
 | Item | Link / value | Status |
 | --- | --- | --- |
-| Public GitHub repository | _pending repository creation_ | blocked on GitHub account/repository |
+| Public GitHub repository | <https://github.com/SachPlayZ/proofroom> | live |
 | Live demo | _pending GitHub Pages deployment_ | blocked on repository push |
 | Preprod contract address | _pending funded deployment_ | blocked on wallet credentials |
-| CI/CD workflow run | _pending first push_ | blocked on repository push |
+| CI/CD workflow | <https://github.com/SachPlayZ/proofroom/actions/workflows/ci.yml> | workflow pushed; first run pending |
 | Product X profile | _pending profile creation_ | blocked on X account |
 | Demo video | _pending recording/upload_ | requires screen recording and hosting |
 | 50-user evidence | [`preprod-users.csv`](./preprod-users.csv) | 0/50 verified |
