@@ -1,0 +1,216 @@
+pragma language_version 0.23;
+
+import CompactStandardLibrary;
+
+export enum ListingState {
+  OPEN,
+  CLOSED
+}
+
+export enum ProofState {
+  PENDING,
+  VERIFIED
+}
+
+export enum AttesterKind {
+  STRIPE,
+  BANK
+}
+
+struct Listing {
+  askFloor: Uint<64>,
+  dossierHash: Bytes<32>,
+  sellerCommitment: Bytes<32>,
+  state: ListingState
+}
+
+struct MatchRequest {
+  listingId: Uint<64>,
+  minTtmRevenue: Uint<64>,
+  minNetRetention: Uint<16>,
+  maxCustomerConcentration: Uint<16>,
+  maxRefundRate: Uint<16>,
+  buyerCommitment: Bytes<32>,
+  sellerProof: ProofState,
+  buyerProof: ProofState,
+  accessGranted: Boolean,
+  ciphertextHash: Bytes<32>
+}
+
+export ledger listings: Map<Uint<64>, Listing>;
+export ledger requests: Map<Uint<64>, MatchRequest>;
+export ledger attesters: Map<AttesterKind, Bytes<32>>;
+// One-time public nullifiers prevent an attestation proof from being replayed.
+// The witness is generated per listing/request by the client wallet.
+export ledger usedNullifiers: Map<Bytes<32>, Boolean>;
+export ledger nextListingId: Counter;
+export ledger nextRequestId: Counter;
+
+witness localSecret(): Bytes<32>;
+witness privateTtmRevenue(): Uint<64>;
+witness privateNetRetention(): Uint<16>;
+witness privateCustomerConcentration(): Uint<16>;
+witness privateRefundRate(): Uint<16>;
+witness privateAvailableFunds(): Uint<64>;
+witness privateProofNullifier(): Bytes<32>;
+
+constructor() {
+}
+
+export circuit registerAttester(kind: AttesterKind, publicKey: Bytes<32>): [] {
+  assert(!attesters.member(disclose(kind)), "attester already registered");
+  attesters.insert(disclose(kind), disclose(publicKey));
+}
+
+export circuit createListing(askFloor: Uint<64>, dossierHash: Bytes<32>, sellerCommitment: Bytes<32>): Uint<64> {
+  assert(sellerCommitment == sellerKey(localSecret()), "invalid seller commitment");
+  const listingId = nextListingId.read() as Uint<64>;
+  nextListingId.increment(1);
+
+  listings.insert(listingId, Listing {
+    askFloor: disclose(askFloor),
+    dossierHash: disclose(dossierHash),
+    sellerCommitment: disclose(sellerCommitment),
+    state: ListingState.OPEN
+  });
+
+  return disclose(listingId);
+}
+
+export circuit createMatchRequest(
+  listingId: Uint<64>,
+  minTtmRevenue: Uint<64>,
+  minNetRetention: Uint<16>,
+  maxCustomerConcentration: Uint<16>,
+  maxRefundRate: Uint<16>,
+  buyerCommitment: Bytes<32>
+): Uint<64> {
+  assert(listings.member(disclose(listingId)), "listing not found");
+  const listing = listings.lookup(disclose(listingId));
+  assert(listing.state == ListingState.OPEN, "listing is closed");
+  assert(buyerCommitment == buyerKey(localSecret()), "invalid buyer commitment");
+
+  const requestId = nextRequestId.read() as Uint<64>;
+  nextRequestId.increment(1);
+
+  requests.insert(requestId, MatchRequest {
+    listingId: disclose(listingId),
+    minTtmRevenue: disclose(minTtmRevenue),
+    minNetRetention: disclose(minNetRetention),
+    maxCustomerConcentration: disclose(maxCustomerConcentration),
+    maxRefundRate: disclose(maxRefundRate),
+    buyerCommitment: disclose(buyerCommitment),
+    sellerProof: ProofState.PENDING,
+    buyerProof: ProofState.PENDING,
+    accessGranted: false,
+    ciphertextHash: pad(32, "")
+  });
+
+  return disclose(requestId);
+}
+
+export circuit proveSellerQualification(requestId: Uint<64>): [] {
+  const request = requests.lookup(disclose(requestId));
+  const nullifier = sellerNullifier(privateProofNullifier());
+  assert(!usedNullifiers.member(disclose(nullifier)), "proof already used");
+  const metricsRevenue = privateTtmRevenue();
+  const metricsRetention = privateNetRetention();
+  const metricsConcentration = privateCustomerConcentration();
+  const metricsRefund = privateRefundRate();
+
+  assert(metricsRevenue >= request.minTtmRevenue, "revenue threshold failed");
+  assert(metricsRetention >= request.minNetRetention, "retention threshold failed");
+  assert(metricsConcentration <= request.maxCustomerConcentration, "concentration threshold failed");
+  assert(metricsRefund <= request.maxRefundRate, "refund threshold failed");
+
+  const listing = listings.lookup(request.listingId);
+  assert(listing.state == ListingState.OPEN, "listing is closed");
+  assert(listing.sellerCommitment == sellerKey(localSecret()), "not the listing owner");
+  usedNullifiers.insert(disclose(nullifier), true);
+
+  requests.insert(disclose(requestId), MatchRequest {
+    listingId: request.listingId,
+    minTtmRevenue: request.minTtmRevenue,
+    minNetRetention: request.minNetRetention,
+    maxCustomerConcentration: request.maxCustomerConcentration,
+    maxRefundRate: request.maxRefundRate,
+    buyerCommitment: request.buyerCommitment,
+    sellerProof: ProofState.VERIFIED,
+    buyerProof: request.buyerProof,
+    accessGranted: request.accessGranted,
+    ciphertextHash: request.ciphertextHash
+  });
+}
+
+export circuit proveBuyerFunds(requestId: Uint<64>): [] {
+  const request = requests.lookup(disclose(requestId));
+  const nullifier = buyerNullifier(privateProofNullifier());
+  assert(!usedNullifiers.member(disclose(nullifier)), "proof already used");
+  const listing = listings.lookup(request.listingId);
+  assert(listing.state == ListingState.OPEN, "listing is closed");
+  assert(request.buyerCommitment == buyerKey(localSecret()), "not the request owner");
+  assert(privateAvailableFunds() >= listing.askFloor, "available funds threshold failed");
+  usedNullifiers.insert(disclose(nullifier), true);
+
+  requests.insert(disclose(requestId), MatchRequest {
+    listingId: request.listingId,
+    minTtmRevenue: request.minTtmRevenue,
+    minNetRetention: request.minNetRetention,
+    maxCustomerConcentration: request.maxCustomerConcentration,
+    maxRefundRate: request.maxRefundRate,
+    buyerCommitment: request.buyerCommitment,
+    sellerProof: request.sellerProof,
+    buyerProof: ProofState.VERIFIED,
+    accessGranted: request.accessGranted,
+    ciphertextHash: request.ciphertextHash
+  });
+}
+
+export circuit grantDossierAccess(requestId: Uint<64>, ciphertextHash: Bytes<32>): [] {
+  const request = requests.lookup(disclose(requestId));
+  const listing = listings.lookup(request.listingId);
+  assert(listing.sellerCommitment == sellerKey(localSecret()), "not the listing owner");
+  assert(request.sellerProof == ProofState.VERIFIED, "seller is not qualified");
+  assert(request.buyerProof == ProofState.VERIFIED, "buyer is not qualified");
+  assert(!request.accessGranted, "access already granted");
+
+  requests.insert(disclose(requestId), MatchRequest {
+    listingId: request.listingId,
+    minTtmRevenue: request.minTtmRevenue,
+    minNetRetention: request.minNetRetention,
+    maxCustomerConcentration: request.maxCustomerConcentration,
+    maxRefundRate: request.maxRefundRate,
+    buyerCommitment: request.buyerCommitment,
+    sellerProof: request.sellerProof,
+    buyerProof: request.buyerProof,
+    accessGranted: true,
+    ciphertextHash: disclose(ciphertextHash)
+  });
+}
+
+export circuit closeListing(listingId: Uint<64>): [] {
+  const listing = listings.lookup(disclose(listingId));
+  assert(listing.sellerCommitment == sellerKey(localSecret()), "not the listing owner");
+  listings.insert(disclose(listingId), Listing {
+    askFloor: listing.askFloor,
+    dossierHash: listing.dossierHash,
+    sellerCommitment: listing.sellerCommitment,
+    state: ListingState.CLOSED
+  });
+}
+
+circuit sellerKey(sk: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "proofroom:seller:"), sk]);
+}
+
+circuit sellerNullifier(raw: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "proofroom:seller-nullifier"), raw]);
+}
+
+circuit buyerNullifier(raw: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "proofroom:buyer-nullifier"), raw]);
+}
+
+circuit buyerKey(sk: Bytes<32>): Bytes<32> {
+  return persistentHash<Vector<2, Bytes<32>>>([pad(32, "proofroom:buyer:"), sk]);
+}
