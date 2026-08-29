@@ -1,0 +1,63 @@
+name: Pilot feedback
+description: Record structured, consented feedback from a ProofRoom pilot participant.
+title: "[feedback] "
+labels: [feedback]
+body:
+  - type: input
+    id: feedback_id
+    attributes:
+      label: Feedback ID
+      description: Use the next ID from docs/feedback-log.md (for example FB-001).
+    validations:
+      required: true
+  - type: dropdown
+    id: role
+    attributes:
+      label: Role
+      options:
+        - seller
+        - buyer
+        - verifier
+        - advisor
+    validations:
+      required: true
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: Task outcome
+      options:
+        - completed
+        - blocked
+        - abandoned
+    validations:
+      required: true
+  - type: textarea
+    id: friction
+    attributes:
+      label: Concrete friction
+      description: Do not include private metrics, balances, identities, or seed phrases.
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - P0 blocker
+        - P1 major
+        - P2 polish
+    validations:
+      required: true
+  - type: input
+    id: requested_change
+    attributes:
+      label: Requested change
+    validations:
+      required: true
+  - type: checkboxes
+    id: consent
+    attributes:
+      label: Consent
+      options:
+        - label: Participant consented to publishing this redacted feedback.
+          required: true
