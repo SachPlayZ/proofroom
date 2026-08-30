@@ -24,6 +24,7 @@ This table is the source of truth for the Level 4/5 submission checklist. Values
 | Structured feedback CSV | [Pilot feedback](docs/pilot-feedback.csv) | 20 synthetic rehearsal rows, explicitly not participant evidence |
 | Updated documentation | this README + [setup/deployment](docs/deployment.md) + [onboarding](docs/onboarding.md) | included |
 | CI/CD | [workflow](.github/workflows/ci.yml) | tests, build, Compact compile, wallet generation, Remotion bundle, Pages deploy |
+| Latest passing CI run | [run 33306462901](https://github.com/SachPlayZ/proofroom/actions/runs/33306462901) | passed on the evidence implementation commit |
 | Product X profile | [release links](docs/release-links.md) | pending account creation, per request |
 | Demo video | [60-second Remotion MP4](https://github.com/SachPlayZ/proofroom/releases/download/v0.1.0/proofroom-demo.mp4) | public release asset; real app flow + cursor/click SFX |
 | Demo script | [demo script](docs/demo-script.md) | ready |
