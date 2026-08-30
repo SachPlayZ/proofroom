@@ -54,6 +54,7 @@
 - In-app browser smoke test — end-to-end happy path passed; verifier cannot see the decrypted dossier.
 - Deployed browser smoke test — live GitHub Pages flow passed end-to-end.
 - `npm run pilot:wallets -- 50` — 50 address rows generated.
+- `npm run pilot:stress -- 50` — Preprod faucet health `SERVING`; plan-only mode confirmed no submissions.
 - `video/npm run lint && video/npm run build` — Remotion bundle checks passed.
 - `ffprobe video/out/proofroom-demo.mp4` — 60.053333-second H.264 MP4 verified.
 

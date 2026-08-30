@@ -8,6 +8,7 @@ const execute = args.includes('--execute');
 const faucetUrl = (process.env.MIDNIGHT_FAUCET_URL ?? 'https://faucet.preprod.midnight.network/api').replace(/\/+$/, '');
 const amount = process.env.MIDNIGHT_FAUCET_AMOUNT ?? '1000';
 const captchaToken = process.env.MIDNIGHT_CAPTCHA_TOKEN;
+const captchaTokensPath = process.env.MIDNIGHT_CAPTCHA_TOKENS_FILE;
 const inputPath = resolve(process.cwd(), 'docs/pilot-wallets.csv');
 const resultPath = resolve(process.cwd(), 'docs/pilot-stress-test-results.csv');
 
@@ -47,12 +48,21 @@ console.log(`Faucet: ${faucetUrl} (${health.status})`);
 console.log(`Mode: ${execute ? 'execute faucet requests' : 'plan only (no submissions)'}`);
 
 if (!execute) {
-  console.log('To submit testnet requests, set MIDNIGHT_CAPTCHA_TOKEN from the faucet and rerun with --execute.');
+  console.log('To submit one request, set MIDNIGHT_CAPTCHA_TOKEN; for a batch, provide MIDNIGHT_CAPTCHA_TOKENS_FILE with one fresh token per address.');
   process.exit(0);
 }
 
 if (!captchaToken) {
-  throw new Error('MIDNIGHT_CAPTCHA_TOKEN is required with --execute; obtain it from the live faucet Turnstile widget.');
+  if (!captchaTokensPath) {
+    throw new Error('Set MIDNIGHT_CAPTCHA_TOKEN for one request or MIDNIGHT_CAPTCHA_TOKENS_FILE with one fresh Turnstile token per request.');
+  }
+}
+
+const captchaTokens = captchaTokensPath
+  ? readFileSync(resolve(process.cwd(), captchaTokensPath), 'utf8').split(/\r?\n/).map((token) => token.trim()).filter(Boolean)
+  : [captchaToken];
+if (captchaTokens.length < selected.length) {
+  throw new Error(`Need ${selected.length} fresh Turnstile tokens in ${captchaTokensPath ?? 'MIDNIGHT_CAPTCHA_TOKEN'}; tokens are not reusable across requests.`);
 }
 
 const resultRows = [
@@ -67,7 +77,7 @@ for (const record of selected) {
   try {
     const response = await fetch(`${faucetUrl}/drips`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Captcha-Token': captchaToken },
+      headers: { 'Content-Type': 'application/json', 'X-Captcha-Token': captchaTokens[resultRows.length - 1] },
       body: JSON.stringify({ recipientAddress: record.wallet_address, amount }),
     });
     const payload = await response.json();

@@ -13,6 +13,8 @@ The stress runner checks the Preprod faucet health endpoint and validates every 
 
 ## Execute faucet requests
 
+For a one-address smoke test:
+
 1. Open the [Midnight Preprod faucet](https://faucet.preprod.midnight.network/) and complete the Turnstile challenge.
 2. Export the resulting token for this shell:
 
@@ -20,11 +22,19 @@ The stress runner checks the Preprod faucet health endpoint and validates every 
    export MIDNIGHT_CAPTCHA_TOKEN='<token from the live faucet widget>'
    ```
 
-3. Run the explicit submission mode:
+3. Run one explicit submission:
 
    ```bash
-   npm run pilot:stress -- 50 --execute
+   npm run pilot:stress -- 1 --execute
    ```
+
+For a batch stress test, collect one fresh Turnstile token per address into an untracked file (one token per line), then run:
+
+```bash
+MIDNIGHT_CAPTCHA_TOKENS_FILE=/path/to/tokens.txt npm run pilot:stress -- 50 --execute
+```
+
+Turnstile tokens are single-use; do not reuse one token across the batch.
 
 The runner records confirmed faucet transaction hashes in `docs/pilot-stress-test-results.csv`. Failed or timed-out slots remain marked `FAILED` and should be retried individually. Do not fund these deterministic keys beyond testnet use; the generator intentionally keeps the stress-test secrets reproducible for repeatable runs.
 
