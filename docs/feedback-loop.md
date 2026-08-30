@@ -29,6 +29,8 @@ This is the operating loop for the 50-user Preprod pilot. Every observation gets
 
 Store records in a private working copy first. Publish only redacted, consented summaries in `docs/feedback-log.md`.
 
+`docs/pilot-feedback.csv` is a synthetic rehearsal dataset only. Replace it with consented participant records before submission.
+
 ## Triage and prioritization
 
 At the end of each pilot day, sort by:
