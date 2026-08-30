@@ -11,6 +11,7 @@ Replace each pending value only after it resolves publicly. Do not publish place
 | Passing CI run | <https://github.com/SachPlayZ/proofroom/actions/runs/33282413354> | passed: tests, build, Compact, Pages |
 | Product X profile | _pending profile creation_ | blocked on X account |
 | Demo video | _pending recording/upload_ | requires screen recording and hosting |
+| Demo script | [`demo-script.md`](./demo-script.md) | ready to record |
 | 50-user evidence | [`preprod-users.csv`](./preprod-users.csv) | 0/50 verified |
 | Feedback summary | [`feedback-log.md`](./feedback-log.md) | awaiting pilot |
 

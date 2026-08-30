@@ -4,6 +4,8 @@ Private pre-diligence screening for small SaaS acquisitions.
 
 > Local demo release. [Public GitHub repository](https://github.com/SachPlayZ/proofroom). Preprod, X, and pilot evidence links are tracked in [`docs/release-links.md`](docs/release-links.md) and are intentionally not fabricated.
 
+**Live demo:** <https://sachplayz.github.io/proofroom/>
+
 ProofRoom lets a seller prove that a business meets a buyer's screening policy and lets the buyer prove available funds. The exact metrics, balance, identities, and data-room contents remain private; the public receipt contains only commitments, qualification outcomes, and an encrypted dossier hash.
 
 ## Run the demo
@@ -28,6 +30,7 @@ The UI is marked **LOCAL DEMO** on purpose: it does not claim a live Preprod dep
 - [50-wallet evidence template](docs/preprod-users.csv)
 - [Preprod evidence register](docs/preprod-evidence.md)
 - [Release links and submission gate](docs/release-links.md)
+- [Two-minute demo script](docs/demo-script.md)
 
 ## Compile the Compact contract
 
