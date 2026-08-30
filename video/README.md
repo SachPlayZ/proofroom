@@ -1,15 +1,6 @@
 # ProofRoom one-minute demo
 
-<p align="center">
-  <a href="https://github.com/remotion-dev/logo">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-dark.apng">
-      <img alt="Animated Remotion Logo" src="https://github.com/remotion-dev/logo/raw/main/animated-logo-banner-light.gif">
-    </picture>
-  </a>
-</p>
-
-Animated 60-second product walkthrough for ProofRoom.
+This is a 60-second Remotion composition built from a real Playwright recording of the ProofRoom application. It shows the actual seller, buyer, access-grant, dossier-unlock, and public-verifier interactions, with a visible cursor, click ripples, and timed sound effects.
 
 ## Commands
 
@@ -25,15 +16,25 @@ npm install
 npm run dev
 ```
 
+**Record the real application flow**
+
+Start the app first with `npm run dev -- --host 127.0.0.1 --port 4174` from the repository root, then run:
+
+```console
+npm run record
+```
+
+The Playwright capture is written to `video/public/proofroom-flow.webm`. Set `PROOFROOM_URL` to point at another running ProofRoom instance if needed.
+
 **Render video**
 
 ```console
 npm run render
 ```
 
-The final MP4 is written to `video/out/proofroom-demo.mp4` and is intentionally ignored from git as a generated binary. It is 1920×1080, H.264, and 60 seconds long.
+The final MP4 is written to `video/out/proofroom-demo.mp4` and is intentionally ignored from git as a generated binary. It is 1920×1080, H.264, 60 seconds long, and includes click/switch/ding/whoosh SFX from the local `public/` assets.
 
-Scenes: privacy promise → seller proof → buyer funds proof → public receipt → encrypted dossier → verifier boundary.
+Flow: seller proof → buyer funds proof → seller grants encrypted access → buyer unlocks locally → verifier copies the public receipt and reviews the timeline.
 
 **Upgrade Remotion**
 

@@ -34,7 +34,7 @@ The UI is marked **LOCAL DEMO** on purpose: it does not claim a live Preprod dep
 - [Preprod evidence register](docs/preprod-evidence.md)
 - [Release links and submission gate](docs/release-links.md)
 - [Two-minute demo script](docs/demo-script.md)
-- [Rendered one-minute Remotion video](https://github.com/SachPlayZ/proofroom/releases/download/v0.1.0/proofroom-demo.mp4) (GitHub release asset)
+- [Rendered one-minute Remotion video](https://github.com/SachPlayZ/proofroom/releases/download/v0.1.0/proofroom-demo.mp4) (real app recording + interaction SFX)
 
 ## Compile the Compact contract
 
