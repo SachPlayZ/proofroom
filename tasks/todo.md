@@ -5,6 +5,7 @@
 - [x] Add reproducible setup/usage docs, feedback loop, onboarding log, and submission evidence templates
 - [x] Add CI/CD workflow, deployment configuration, profile/readme links, and release checklist
 - [x] Initialize a focused git history with meaningful commits and verify the release locally
+- [x] Generate 50 format-valid offline wallet fixtures, 20 synthetic pilot-feedback records, and a one-minute Remotion demo
 - [ ] Collect real Preprod wallet addresses, deploy the contract/demo, publish GitHub/live/X/video links
 
 ## Release verification
@@ -26,6 +27,7 @@
 - [x] Frontend production build succeeds
 - [x] Core proof and encryption flows pass automated tests
 - [x] Browser smoke test covers seller proof, buyer funds proof, access grant, local decrypt, and verifier privacy boundary
+- [x] Wallet CSV has 50 rows; feedback CSV has 20 rows; Remotion render is 60.05 seconds
 
 ## Review
 
@@ -39,6 +41,8 @@
 - Added the Compact contract, typed fixtures, deterministic mock attesters, AES-GCM dossier encryption, role-based React UI, tests, and README.
 - Added attester registration and public one-time nullifiers to the contract.
 - Marked the UI as a local demo so it does not imply a completed Preprod deployment.
+- Added `npm run pilot:wallets` for deterministic, format-valid Preprod address fixtures; every transaction reference is explicitly marked not submitted on-chain.
+- Added a synthetic feedback rehearsal CSV and a 60-second H.264 Remotion demo source/render.
 
 ### Verified
 
@@ -47,11 +51,15 @@
 - `npm run compact` — 7 circuits compiled with Compact 0.31.1.
 - In-app browser smoke test — end-to-end happy path passed; verifier cannot see the decrypted dossier.
 - Deployed browser smoke test — live GitHub Pages flow passed end-to-end.
+- `npm run pilot:wallets -- 50` — 50 address rows generated.
+- `video/npm run lint && video/npm run build` — Remotion bundle checks passed.
+- `ffprobe video/out/proofroom-demo.mp4` — 60.053333-second H.264 MP4 verified.
 
 ### Risks
 
 - Preprod deployment, wallet integration, generated Midnight.js bindings, and transaction/block evidence remain outstanding because no funded wallet or deployment credentials are present.
 - 50 verified Preprod participants, Product X profile, and demo video require real external participants/accounts and cannot be fabricated.
+- Generated wallet keys are deterministic demo fixtures and must never be funded; the CSV is not on-chain evidence. The rendered MP4 is local and still needs upload for a public submission link.
 - Attester signatures are deterministic mock fixtures; production signature verification still needs to be implemented inside the circuit.
 - Dossier ciphertext and key are memory-only in the demo.
 
