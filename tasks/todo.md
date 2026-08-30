@@ -34,7 +34,7 @@
 - Created public repository: https://github.com/SachPlayZ/proofroom
 - Added GitHub Actions verification + Pages deployment.
 - Added onboarding, feedback, evidence, deployment, release-link, issue, and PR templates.
-- Created 24 focused commits and pushed `main`.
+- Created 26 focused commits and pushed `main`.
 
 - Added the Compact contract, typed fixtures, deterministic mock attesters, AES-GCM dossier encryption, role-based React UI, tests, and README.
 - Added attester registration and public one-time nullifiers to the contract.
