@@ -28,9 +28,12 @@ The UI is marked **LOCAL DEMO** on purpose: it does not claim a live Preprod dep
 - [Structured feedback loop and prioritization](docs/feedback-loop.md)
 - [Redacted feedback log](docs/feedback-log.md)
 - [50-wallet evidence template](docs/preprod-users.csv)
+- [Generated wallet fixtures](docs/pilot-wallets.csv) (`npm run pilot:wallets`)
+- [Pilot feedback CSV](docs/pilot-feedback.csv) — synthetic rehearsal data only
 - [Preprod evidence register](docs/preprod-evidence.md)
 - [Release links and submission gate](docs/release-links.md)
 - [Two-minute demo script](docs/demo-script.md)
+- [Rendered one-minute Remotion video](video/out/proofroom-demo.mp4) (local generated artifact)
 
 ## Compile the Compact contract
 
@@ -62,7 +65,7 @@ The current MVP does not implement escrow, acquisition settlement, custom shield
 
 ## CI/CD
 
-`.github/workflows/ci.yml` runs `npm ci`, tests, the production build, Compact compilation, and publishes a Pages artifact. A push to `main` deploys the frontend to GitHub Pages after verification. Enable GitHub Pages with **GitHub Actions** as its source, then copy the generated URL to `docs/release-links.md`.
+`.github/workflows/ci.yml` runs `npm ci`, tests, the production build, Compact compilation, pilot-fixture generation, and Remotion lint/bundling before publishing a Pages artifact. A push to `main` deploys the frontend to GitHub Pages after verification. Enable GitHub Pages with **GitHub Actions** as its source, then copy the generated URL to `docs/release-links.md`.
 
 [View the CI/CD workflow](https://github.com/SachPlayZ/proofroom/actions/workflows/ci.yml)
 

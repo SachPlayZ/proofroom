@@ -43,16 +43,47 @@ jobs:
       - name: Compile Compact contract
         run: npm run compact
 
+      - name: Verify pilot wallet fixture generator
+        run: npm run pilot:wallets -- 50
+
       - name: Upload frontend artifact
         uses: actions/upload-artifact@v4
         with:
           name: proofroom-dist
           path: dist
 
+  video:
+    name: Check Remotion demo
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: video
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: video/package-lock.json
+
+      - name: Install video dependencies
+        run: npm ci
+
+      - name: Lint and typecheck video
+        run: npm run lint
+
+      - name: Bundle Remotion demo
+        run: npm run build
+
   deploy:
     name: Deploy demo to GitHub Pages
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: verify
+    needs: [verify, video]
     runs-on: ubuntu-latest
     permissions:
       contents: read
