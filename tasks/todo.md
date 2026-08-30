@@ -12,6 +12,7 @@
 - [x] CI workflow passes tests/build/Compact compilation
 - [x] README contains setup, usage, privacy, feedback, live links, and evidence links
 - [ ] Evidence files have verifiable on-chain wallet/transaction fields (no fabricated data)
+- [x] Public GitHub repository and live GitHub Pages demo verified
 
 ## Plan
 
@@ -30,6 +31,11 @@
 
 ### Changed
 
+- Created public repository: https://github.com/SachPlayZ/proofroom
+- Added GitHub Actions verification + Pages deployment.
+- Added onboarding, feedback, evidence, deployment, release-link, issue, and PR templates.
+- Created 24 focused commits and pushed `main`.
+
 - Added the Compact contract, typed fixtures, deterministic mock attesters, AES-GCM dossier encryption, role-based React UI, tests, and README.
 - Added attester registration and public one-time nullifiers to the contract.
 - Marked the UI as a local demo so it does not imply a completed Preprod deployment.
@@ -40,10 +46,12 @@
 - `npm run build` — production bundle built.
 - `npm run compact` — 7 circuits compiled with Compact 0.31.1.
 - In-app browser smoke test — end-to-end happy path passed; verifier cannot see the decrypted dossier.
+- Deployed browser smoke test — live GitHub Pages flow passed end-to-end.
 
 ### Risks
 
 - Preprod deployment, wallet integration, generated Midnight.js bindings, and transaction/block evidence remain outstanding because no funded wallet or deployment credentials are present.
+- 50 verified Preprod participants, Product X profile, and demo video require real external participants/accounts and cannot be fabricated.
 - Attester signatures are deterministic mock fixtures; production signature verification still needs to be implemented inside the circuit.
 - Dossier ciphertext and key are memory-only in the demo.
 
