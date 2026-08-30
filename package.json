@@ -13,7 +13,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "compact": "compact compile compact/proofroom.compact compact/managed",
-    "pilot:wallets": "node scripts/generate-pilot-wallets.mjs"
+    "pilot:wallets": "node scripts/generate-pilot-wallets.mjs",
+    "pilot:stress": "node scripts/run-preprod-stress-test.mjs"
   },
   "dependencies": {
     "@midnight-ntwrk/wallet-sdk-abstractions": "2.1.0",

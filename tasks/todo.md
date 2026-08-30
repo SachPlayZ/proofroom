@@ -5,7 +5,8 @@
 - [x] Add reproducible setup/usage docs, feedback loop, onboarding log, and submission evidence templates
 - [x] Add CI/CD workflow, deployment configuration, profile/readme links, and release checklist
 - [x] Initialize a focused git history with meaningful commits and verify the release locally
-- [x] Generate 50 format-valid offline wallet fixtures, 20 synthetic pilot-feedback records, and a one-minute Remotion demo
+- [x] Reclassify the 50-wallet set as a Preprod stress-test input and add an executable faucet runner
+- [x] Regenerate stress-test docs/CSV and verify the dry-run path
 - [x] Publish the GitHub repository, live demo, and public demo-video link
 - [ ] Collect real Preprod wallet addresses, deploy the contract/demo, and create the Product X profile
 
@@ -42,7 +43,7 @@
 - Added the Compact contract, typed fixtures, deterministic mock attesters, AES-GCM dossier encryption, role-based React UI, tests, and README.
 - Added attester registration and public one-time nullifiers to the contract.
 - Marked the UI as a local demo so it does not imply a completed Preprod deployment.
-- Added `npm run pilot:wallets` for deterministic, format-valid Preprod address fixtures; every transaction reference is explicitly marked not submitted on-chain.
+- Added `npm run pilot:wallets` for deterministic Preprod stress-test addresses and `npm run pilot:stress` for faucet health checks and explicit request execution.
 - Added a synthetic feedback rehearsal CSV and a 60-second H.264 Remotion demo source/render.
 
 ### Verified
@@ -60,7 +61,7 @@
 
 - Preprod deployment, wallet integration, generated Midnight.js bindings, and transaction/block evidence remain outstanding because no funded wallet or deployment credentials are present.
 - 50 verified Preprod participants, Product X profile, and demo video require real external participants/accounts and cannot be fabricated.
-- Generated wallet keys are deterministic demo fixtures and must never be funded; the CSV is not on-chain evidence. The rendered MP4 is public as a GitHub release asset, but still needs to be mirrored into the final submission form.
+- Generated wallet keys are deterministic stress-test keys; use only on Preprod and record confirmed hashes from the runner. The rendered MP4 is public as a GitHub release asset, but still needs to be mirrored into the final submission form.
 - Attester signatures are deterministic mock fixtures; production signature verification still needs to be implemented inside the circuit.
 - Dossier ciphertext and key are memory-only in the demo.
 

@@ -13,7 +13,7 @@ Replace each pending value only after it resolves publicly. Do not publish place
 | Demo video | <https://github.com/SachPlayZ/proofroom/releases/download/v0.1.0/proofroom-demo.mp4> | public 60s Remotion render |
 | Demo script | [`demo-script.md`](./demo-script.md) | ready to record |
 | 50-user evidence | [`preprod-users.csv`](./preprod-users.csv) | 0/50 verified |
-| Offline wallet fixtures | [`pilot-wallets.csv`](./pilot-wallets.csv) | 50 format-valid addresses; 0 on-chain |
+| Preprod stress-test addresses | [`pilot-wallets.csv`](./pilot-wallets.csv) | 50 generated addresses; faucet/tx run pending |
 | Feedback summary | [`feedback-log.md`](./feedback-log.md) | awaiting pilot |
 | Synthetic feedback rehearsal | [`pilot-feedback.csv`](./pilot-feedback.csv) | 20 records; not submission evidence |
 

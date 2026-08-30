@@ -17,12 +17,12 @@ function csv(value) {
   return `"${String(value).replaceAll('"', '""')}"`;
 }
 
-function fixtureSecret(slot) {
-  return createHash('sha256').update(`proofroom-offline-pilot-wallet-${slot}`).digest();
+function stressTestSecret(slot) {
+  return createHash('sha256').update(`proofroom-preprod-stress-test-wallet-${slot}`).digest();
 }
 
-function fixtureReference(address, slot) {
-  return `OFFLINE-FIXTURE-TX-${createHash('sha256').update(`${address}:${slot}`).digest('hex').slice(0, 32)}`;
+function stressTestReference(address, slot) {
+  return `PREPROD-STRESS-TEST-${createHash('sha256').update(`${address}:${slot}`).digest('hex').slice(0, 32)}`;
 }
 
 const rows = [
@@ -40,15 +40,15 @@ const rows = [
 ];
 
 for (let slot = 1; slot <= count; slot += 1) {
-  const address = createKeystore(fixtureSecret(slot), network).getBech32Address().toString();
+  const address = createKeystore(stressTestSecret(slot), network).getBech32Address().toString();
   rows.push([
     String(slot).padStart(2, '0'),
-    'offline_fixture',
-    'preprod-format-only',
+    'preprod_stress_test',
+    'preprod',
     roles[(slot - 1) % roles.length],
     address,
-    fixtureReference(address, slot),
-    'NOT_SUBMITTED_TO_PREPROD',
+    stressTestReference(address, slot),
+    'ADDRESS_READY_TX_PENDING',
     '',
     `FB-${String(slot).padStart(3, '0')}`,
   ]);
@@ -56,5 +56,5 @@ for (let slot = 1; slot <= count; slot += 1) {
 
 mkdirSync(dirname(outputPath), { recursive: true });
 writeFileSync(outputPath, `${rows.map((row) => row.map(csv).join(',')).join('\n')}\n`);
-console.log(`Wrote ${count} offline wallet fixtures to ${outputPath}`);
-console.log('These addresses have valid Preprod formatting but no on-chain transactions. Replace transaction_reference/status only after real funding and submission.');
+console.log(`Wrote ${count} Preprod stress-test addresses to ${outputPath}`);
+console.log('References are stress-test plan IDs. Replace them with confirmed transaction hashes after faucet funding and network submission.');
