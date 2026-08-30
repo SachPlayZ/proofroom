@@ -2,15 +2,15 @@
 
 ## Release requirements plan
 
-- [ ] Add reproducible setup/usage docs, feedback loop, onboarding log, and submission evidence templates
-- [ ] Add CI/CD workflow, deployment configuration, profile/readme links, and release checklist
-- [ ] Initialize a focused git history with meaningful commits and verify the release locally
+- [x] Add reproducible setup/usage docs, feedback loop, onboarding log, and submission evidence templates
+- [x] Add CI/CD workflow, deployment configuration, profile/readme links, and release checklist
+- [x] Initialize a focused git history with meaningful commits and verify the release locally
 - [ ] Collect real Preprod wallet addresses, deploy the contract/demo, publish GitHub/live/X/video links
 
 ## Release verification
 
-- [ ] CI workflow passes tests/build/Compact compilation
-- [ ] README contains setup, usage, privacy, feedback, live links, and evidence links
+- [x] CI workflow passes tests/build/Compact compilation
+- [x] README contains setup, usage, privacy, feedback, live links, and evidence links
 - [ ] Evidence files have verifiable on-chain wallet/transaction fields (no fabricated data)
 
 ## Plan
