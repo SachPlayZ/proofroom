@@ -17,9 +17,9 @@ This table is the source of truth for the Level 4/5 submission checklist. Values
 | Public repository | [github.com/SachPlayZ/proofroom](https://github.com/SachPlayZ/proofroom) | live |
 | Live demo | [sachplayz.github.io/proofroom](https://sachplayz.github.io/proofroom/) | live GitHub Pages demo |
 | Working Preprod contract | [Preprod evidence register](docs/preprod-evidence.md) | contract address pending funded deployment |
-| Contract/transaction references | [Transaction proof register](docs/pilot-transaction-proof.csv) | 50 stress-test plan rows; confirmed hashes pending faucet tokens |
+| Contract/transaction references | [Transaction proof register](docs/pilot-transaction-proof.csv) | 50 confirmed Preprod wallet hashes; Compact contract deployment remains pending |
 | 50 Preprod user addresses | [Participant evidence template](docs/preprod-users.csv) | 0/50 verified participant rows; do not confuse with stress-test addresses |
-| 50 separate stress-test wallets | [Pilot wallet set](docs/pilot-wallets.csv) | 50 distinct valid `mn_addr_preprod1...` addresses generated locally |
+| 50 separate stress-test wallets | [Pilot wallet set](docs/pilot-wallets.csv) | 50 distinct valid `mn_addr_preprod1...` addresses; slot 01 source funding confirmed |
 | Feedback loop | [Feedback loop](docs/feedback-loop.md) + [feedback log](docs/feedback-log.md) | documented; pilot collection pending |
 | Structured feedback CSV | [Pilot feedback](docs/pilot-feedback.csv) | 20 synthetic rehearsal rows, explicitly not participant evidence |
 | Updated documentation | this README + [setup/deployment](docs/deployment.md) + [onboarding](docs/onboarding.md) | included |
@@ -88,7 +88,7 @@ npm run pilot:wallets -- 50
 npm run pilot:stress -- 50
 ```
 
-This creates [`docs/pilot-wallets.csv`](docs/pilot-wallets.csv) and [`docs/pilot-transaction-proof.csv`](docs/pilot-transaction-proof.csv). Every address is a distinct valid Preprod address. In the proof register, `plan_reference` is a deterministic stress-test ID; `transaction_reference` stays blank until a faucet response returns a real hash.
+This creates [`docs/pilot-wallets.csv`](docs/pilot-wallets.csv) and [`docs/pilot-transaction-proof.csv`](docs/pilot-transaction-proof.csv). Every address is a distinct valid Preprod address. In the proof register, `plan_reference` is a deterministic stress-test ID; `transaction_reference` is populated only with a real indexer-confirmed hash. Slot 01's confirmed funding and DUST registration are documented in [`docs/preprod-source-funding.md`](docs/preprod-source-funding.md).
 
 The Preprod faucet requires a fresh Cloudflare Turnstile token for every request. Execute one request after completing the live faucet challenge:
 
@@ -103,7 +103,21 @@ For all 50 addresses, place 50 fresh single-use tokens in an untracked file and 
 MIDNIGHT_CAPTCHA_TOKENS_FILE=/path/to/tokens.txt npm run pilot:stress -- 50 --execute
 ```
 
-The runner submits to the [Midnight Preprod faucet](https://faucet.preprod.midnight.network/), polls each drip, and overwrites the proof register with confirmed faucet transaction hashes. It refuses to run without fresh tokens, so this repository never invents on-chain evidence. The last repository check reached faucet health `SERVING`; no confirmed hashes are recorded until the external Turnstile step is completed.
+The runner submits to the [Midnight Preprod faucet](https://faucet.preprod.midnight.network/), polls each drip, and overwrites the proof register with confirmed faucet transaction hashes. It refuses to run without fresh tokens, so this repository never invents on-chain evidence.
+
+To use the funded slot 01 source wallet instead of the faucet, first replay the public DUST ledger into a local cache, then execute one fee-paying transfer per destination:
+
+```bash
+npm run pilot:dust-sync
+npm run pilot:stress -- 50 --execute --fund-children
+npm run pilot:verify
+```
+
+The transfer runner submits finalized transactions through the Preprod RPC and polls the indexer for a `SUCCESS` output to each destination before writing its hash. `pilot:verify` independently resolves every hash to a `SUCCESS` output and adds block height/hash and amount evidence. It is resumable: already-confirmed rows remain in the CSV and each successful row is written immediately.
+
+Slot 01's faucet funding (`55847e8cf1b4ab68596759cee6f847ee088b87c832d0caedbdb3dd1bd193718d`) and DUST registration (`e29d76daa081f9991bd4235e6131378c54020d2593da5432cffdea1124e65b98`) are independently recorded in [`docs/preprod-source-funding.md`](docs/preprod-source-funding.md).
+
+These 50 receipts are genuine Preprod wallet/RPC/indexer stress-test transactions. They are not represented as ProofRoom Compact contract calls; the contract address and application deployment remain pending.
 
 For the required 50 *participant* wallets, collect consent and real wallet/transaction/block references in [`docs/preprod-users.csv`](docs/preprod-users.csv). The deterministic stress-test set is not a substitute for those participant rows.
 

@@ -10,13 +10,17 @@
 - [x] Publish the GitHub repository, live demo, and public demo-video link
 - [x] Rebuild the README as a complete evidence index and add the reproducible transaction-proof CSV
 - [ ] Collect real Preprod wallet addresses, deploy the contract/demo, and create the Product X profile
+- [x] Confirm slot 01 funding and register its NIGHT output for DUST generation
+- [x] Fund slots 02–50 with 49 confirmed Preprod transfers and record indexer hashes/blocks
+- [x] Add reproducible stress-test runner, source-funding evidence, and README links
 
 ## Release verification
 
 - [x] CI workflow passes tests/build/Compact compilation
 - [x] README contains setup, usage, privacy, feedback, live links, and evidence links
 - [x] README links every submission artifact and distinguishes confirmed on-chain evidence from stress-test plan rows
-- [ ] Evidence files have verifiable on-chain wallet/transaction fields (no fabricated data)
+- [x] Evidence files have verifiable on-chain wallet/transaction fields (no fabricated data)
+- [x] Every populated proof row maps to a SUCCESS transaction returned by the Preprod indexer
 - [x] Public GitHub repository and live GitHub Pages demo verified
 
 ## Plan
@@ -50,7 +54,8 @@
 - Added a synthetic feedback rehearsal CSV and a 60-second H.264 Remotion demo source/render.
 - Replaced the slide-style demo with a real app recording, visible interaction cursor/ripples, and local click/switch/ding/whoosh tracks.
 - Rebuilt `README.md` as the submission evidence index with setup, privacy model, role flow, feedback, CI/CD, video, stress-test, and deployment handoff sections.
-- Added `docs/pilot-transaction-proof.csv`; wallet generation now refreshes the 50-row pending register and the real faucet runner overwrites it only with returned drip hashes.
+- Added the pinned Midnight wallet/DUST SDK stack, a public DUST snapshot builder, direct Preprod RPC submission, and an indexer verifier.
+- Added `docs/preprod-source-funding.md`; wallet generation preserves confirmed hashes and `docs/pilot-transaction-proof.csv` now stores block/amount evidence.
 
 ### Verified
 
@@ -63,13 +68,16 @@
 - `npm run pilot:stress -- 50` — Preprod faucet health `SERVING`; plan-only mode confirmed no submissions.
 - `MIDNIGHT_CAPTCHA_TOKEN=test-token-not-valid npm run pilot:stress -- 1 --execute` — real faucet path reached; rejected by Turnstile, so no hash was recorded.
 - `npm run pilot:wallets -- 50` — regenerated 50-address wallet CSV and 50-row transaction-proof register.
+- `npm run pilot:dust-sync` — replayed the public DUST ledger and produced a local slot-01 snapshot.
+- `npm run pilot:stress -- 50 --execute --fund-children` — 49 serial source-to-destination transfers confirmed on Preprod (50 unique hashes including slot 01 funding).
+- `npm run pilot:verify` — independently resolved all 50 hashes to `SUCCESS` outputs and wrote block height/hash/amount fields.
 - `video/npm run lint && video/npm run build` — Remotion bundle checks passed.
 - `ffprobe video/out/proofroom-demo.mp4` — 60.053333-second H.264 MP4 verified.
 
 ### Risks
 
-- Preprod deployment, wallet integration, generated Midnight.js bindings, and transaction/block evidence remain outstanding because no funded wallet or deployment credentials are present.
-- The faucet’s external Turnstile gate blocked live drips in this environment; pending proof rows remain explicit and are not presented as transaction hashes.
+- Compact contract deployment, generated Midnight.js integration, 50 consented human participant records, and the Product X profile remain outstanding.
+- The faucet’s external Turnstile gate blocked direct batch drips; the confirmed run used the operator-funded slot-01 wallet and fee-paying RPC transfers instead.
 - 50 verified Preprod participants and the Product X profile require real external participants/accounts; the demo video is now public as a release asset.
 - Generated wallet keys are deterministic stress-test keys; use only on Preprod and record confirmed hashes from the runner. The rendered MP4 is public as a GitHub release asset, but still needs to be mirrored into the final submission form.
 - Attester signatures are deterministic mock fixtures; production signature verification still needs to be implemented inside the circuit.
@@ -77,4 +85,8 @@
 
 ### Follow-ups
 
-- Pin compatible Midnight.js/proof-server versions, wire managed bindings, deploy to Preprod, and record transaction/block evidence.
+- Pin compatible Midnight.js/proof-server versions, wire managed bindings, and deploy the Compact contract to Preprod.
+
+## Active work
+
+The funded source is slot 01. Its faucet transaction, DUST-registration transaction, and 49 serial child transfers are confirmed; contract deployment and consented participant evidence remain separate outstanding requirements.

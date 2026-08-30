@@ -4,3 +4,4 @@ compact/managed
 *.tsbuildinfo
 .DS_Store
 .env
+.proofroom-cache/
