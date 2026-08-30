@@ -30,6 +30,7 @@
 - [x] Core proof and encryption flows pass automated tests
 - [x] Browser smoke test covers seller proof, buyer funds proof, access grant, local decrypt, and verifier privacy boundary
 - [x] Wallet CSV has 50 rows; feedback CSV has 20 rows; Remotion render is 60.05 seconds
+- [x] Remotion video uses a Playwright recording of the real app flow with cursor/click overlays and audio SFX
 
 ## Review
 
@@ -45,6 +46,7 @@
 - Marked the UI as a local demo so it does not imply a completed Preprod deployment.
 - Added `npm run pilot:wallets` for deterministic Preprod stress-test addresses and `npm run pilot:stress` for faucet health checks and explicit request execution.
 - Added a synthetic feedback rehearsal CSV and a 60-second H.264 Remotion demo source/render.
+- Replaced the slide-style demo with a real app recording, visible interaction cursor/ripples, and local click/switch/ding/whoosh tracks.
 
 ### Verified
 
@@ -61,7 +63,7 @@
 ### Risks
 
 - Preprod deployment, wallet integration, generated Midnight.js bindings, and transaction/block evidence remain outstanding because no funded wallet or deployment credentials are present.
-- 50 verified Preprod participants, Product X profile, and demo video require real external participants/accounts and cannot be fabricated.
+- 50 verified Preprod participants and the Product X profile require real external participants/accounts; the demo video is now public as a release asset.
 - Generated wallet keys are deterministic stress-test keys; use only on Preprod and record confirmed hashes from the runner. The rendered MP4 is public as a GitHub release asset, but still needs to be mirrored into the final submission form.
 - Attester signatures are deterministic mock fixtures; production signature verification still needs to be implemented inside the circuit.
 - Dossier ciphertext and key are memory-only in the demo.
