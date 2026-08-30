@@ -8,7 +8,7 @@ Replace each pending value only after it resolves publicly. Do not publish place
 | Live demo | <https://sachplayz.github.io/proofroom/> | live GitHub Pages demo |
 | Preprod contract address | _pending funded deployment_ | blocked on wallet credentials |
 | CI/CD workflow | <https://github.com/SachPlayZ/proofroom/actions/workflows/ci.yml> | configured |
-| Passing CI run | <https://github.com/SachPlayZ/proofroom/actions/runs/33302632514> | passed: tests, build, Compact, pilot fixtures, Remotion, Pages |
+| Passing CI run | <https://github.com/SachPlayZ/proofroom/actions/runs/33304778029> | passed: tests, build, Compact, stress-test addresses, Remotion, Pages |
 | Product X profile | _pending profile creation_ | blocked on X account |
 | Demo video | <https://github.com/SachPlayZ/proofroom/releases/download/v0.1.0/proofroom-demo.mp4> | public 60s Remotion render |
 | Demo script | [`demo-script.md`](./demo-script.md) | ready to record |
