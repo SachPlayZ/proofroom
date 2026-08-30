@@ -66,7 +66,7 @@ if (captchaTokens.length < selected.length) {
 }
 
 const resultRows = [
-  ['slot', 'role', 'wallet_address', 'drip_id', 'transaction_reference', 'status', 'network', 'recorded_at_utc'],
+  ['slot', 'role', 'wallet_address', 'plan_reference', 'drip_id', 'transaction_reference', 'status', 'network', 'recorded_at_utc'],
 ];
 let failures = 0;
 
@@ -106,6 +106,7 @@ for (const record of selected) {
     record.slot,
     record.role,
     record.wallet_address,
+    record.transaction_reference,
     dripId,
     transactionReference,
     status,

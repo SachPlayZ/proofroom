@@ -41,7 +41,7 @@ const rows = [
 ];
 
 const proofRows = [
-  ['slot', 'role', 'wallet_address', 'drip_id', 'transaction_reference', 'status', 'network', 'recorded_at_utc'],
+  ['slot', 'role', 'wallet_address', 'plan_reference', 'drip_id', 'transaction_reference', 'status', 'network', 'recorded_at_utc'],
 ];
 
 for (let slot = 1; slot <= count; slot += 1) {
@@ -63,8 +63,9 @@ for (let slot = 1; slot <= count; slot += 1) {
     String(slot).padStart(2, '0'),
     role,
     address,
-    '',
     reference,
+    '',
+    '',
     'ADDRESS_READY_TX_PENDING',
     'preprod',
     '',

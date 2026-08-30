@@ -88,7 +88,7 @@ npm run pilot:wallets -- 50
 npm run pilot:stress -- 50
 ```
 
-This creates [`docs/pilot-wallets.csv`](docs/pilot-wallets.csv) and [`docs/pilot-transaction-proof.csv`](docs/pilot-transaction-proof.csv). Every address is a distinct valid Preprod address. The transaction reference in a pending row is a deterministic **stress-test plan ID**, not a transaction hash.
+This creates [`docs/pilot-wallets.csv`](docs/pilot-wallets.csv) and [`docs/pilot-transaction-proof.csv`](docs/pilot-transaction-proof.csv). Every address is a distinct valid Preprod address. In the proof register, `plan_reference` is a deterministic stress-test ID; `transaction_reference` stays blank until a faucet response returns a real hash.
 
 The Preprod faucet requires a fresh Cloudflare Turnstile token for every request. Execute one request after completing the live faucet challenge:
 
