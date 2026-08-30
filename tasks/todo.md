@@ -8,12 +8,14 @@
 - [x] Reclassify the 50-wallet set as a Preprod stress-test input and add an executable faucet runner
 - [x] Regenerate stress-test docs/CSV and verify the dry-run path
 - [x] Publish the GitHub repository, live demo, and public demo-video link
+- [x] Rebuild the README as a complete evidence index and add the reproducible transaction-proof CSV
 - [ ] Collect real Preprod wallet addresses, deploy the contract/demo, and create the Product X profile
 
 ## Release verification
 
 - [x] CI workflow passes tests/build/Compact compilation
 - [x] README contains setup, usage, privacy, feedback, live links, and evidence links
+- [x] README links every submission artifact and distinguishes confirmed on-chain evidence from stress-test plan rows
 - [ ] Evidence files have verifiable on-chain wallet/transaction fields (no fabricated data)
 - [x] Public GitHub repository and live GitHub Pages demo verified
 
@@ -47,6 +49,8 @@
 - Added `npm run pilot:wallets` for deterministic Preprod stress-test addresses and `npm run pilot:stress` for faucet health checks and explicit request execution.
 - Added a synthetic feedback rehearsal CSV and a 60-second H.264 Remotion demo source/render.
 - Replaced the slide-style demo with a real app recording, visible interaction cursor/ripples, and local click/switch/ding/whoosh tracks.
+- Rebuilt `README.md` as the submission evidence index with setup, privacy model, role flow, feedback, CI/CD, video, stress-test, and deployment handoff sections.
+- Added `docs/pilot-transaction-proof.csv`; wallet generation now refreshes the 50-row pending register and the real faucet runner overwrites it only with returned drip hashes.
 
 ### Verified
 
@@ -57,12 +61,15 @@
 - Deployed browser smoke test — live GitHub Pages flow passed end-to-end.
 - `npm run pilot:wallets -- 50` — 50 address rows generated.
 - `npm run pilot:stress -- 50` — Preprod faucet health `SERVING`; plan-only mode confirmed no submissions.
+- `MIDNIGHT_CAPTCHA_TOKEN=test-token-not-valid npm run pilot:stress -- 1 --execute` — real faucet path reached; rejected by Turnstile, so no hash was recorded.
+- `npm run pilot:wallets -- 50` — regenerated 50-address wallet CSV and 50-row transaction-proof register.
 - `video/npm run lint && video/npm run build` — Remotion bundle checks passed.
 - `ffprobe video/out/proofroom-demo.mp4` — 60.053333-second H.264 MP4 verified.
 
 ### Risks
 
 - Preprod deployment, wallet integration, generated Midnight.js bindings, and transaction/block evidence remain outstanding because no funded wallet or deployment credentials are present.
+- The faucet’s external Turnstile gate blocked live drips in this environment; pending proof rows remain explicit and are not presented as transaction hashes.
 - 50 verified Preprod participants and the Product X profile require real external participants/accounts; the demo video is now public as a release asset.
 - Generated wallet keys are deterministic stress-test keys; use only on Preprod and record confirmed hashes from the runner. The rendered MP4 is public as a GitHub release asset, but still needs to be mirrored into the final submission form.
 - Attester signatures are deterministic mock fixtures; production signature verification still needs to be implemented inside the circuit.

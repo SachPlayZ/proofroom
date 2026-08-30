@@ -36,7 +36,7 @@ MIDNIGHT_CAPTCHA_TOKENS_FILE=/path/to/tokens.txt npm run pilot:stress -- 50 --ex
 
 Turnstile tokens are single-use; do not reuse one token across the batch.
 
-The runner records confirmed faucet transaction hashes in `docs/pilot-stress-test-results.csv`. Failed or timed-out slots remain marked `FAILED` and should be retried individually. Do not fund these deterministic keys beyond testnet use; the generator intentionally keeps the stress-test secrets reproducible for repeatable runs.
+The runner records confirmed faucet transaction hashes in [`docs/pilot-transaction-proof.csv`](./pilot-transaction-proof.csv). Failed or timed-out slots remain marked `FAILED` and should be retried individually. Do not fund these deterministic keys beyond testnet use; the generator intentionally keeps the stress-test secrets reproducible for repeatable runs.
 
 ## Current run
 

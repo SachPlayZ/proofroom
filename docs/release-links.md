@@ -14,6 +14,7 @@ Replace each pending value only after it resolves publicly. Do not publish place
 | Demo script | [`demo-script.md`](./demo-script.md) | ready to record |
 | 50-user evidence | [`preprod-users.csv`](./preprod-users.csv) | 0/50 verified |
 | Preprod stress-test addresses | [`pilot-wallets.csv`](./pilot-wallets.csv) | 50 generated addresses; faucet/tx run pending |
+| Transaction proof register | [`pilot-transaction-proof.csv`](./pilot-transaction-proof.csv) | 50 pending plan rows; hashes appear only after confirmed faucet responses |
 | Feedback summary | [`feedback-log.md`](./feedback-log.md) | awaiting pilot |
 | Synthetic feedback rehearsal | [`pilot-feedback.csv`](./pilot-feedback.csv) | 20 records; not submission evidence |
 

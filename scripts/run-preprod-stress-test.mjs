@@ -10,7 +10,7 @@ const amount = process.env.MIDNIGHT_FAUCET_AMOUNT ?? '1000';
 const captchaToken = process.env.MIDNIGHT_CAPTCHA_TOKEN;
 const captchaTokensPath = process.env.MIDNIGHT_CAPTCHA_TOKENS_FILE;
 const inputPath = resolve(process.cwd(), 'docs/pilot-wallets.csv');
-const resultPath = resolve(process.cwd(), 'docs/pilot-stress-test-results.csv');
+const resultPath = resolve(process.cwd(), 'docs/pilot-transaction-proof.csv');
 
 if (!Number.isInteger(count) || count < 1 || count > 500) {
   throw new Error('Usage: npm run pilot:stress -- [count 1..500] [--execute]');

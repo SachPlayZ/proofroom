@@ -11,6 +11,7 @@ if (!Number.isInteger(count) || count < 1 || count > 500) {
 
 const roles = ['buyer', 'seller', 'verifier', 'advisor'];
 const outputPath = resolve(process.cwd(), 'docs/pilot-wallets.csv');
+const proofOutputPath = resolve(process.cwd(), 'docs/pilot-transaction-proof.csv');
 const network = NetworkId.NetworkId.PreProd;
 
 function csv(value) {
@@ -39,22 +40,40 @@ const rows = [
   ],
 ];
 
+const proofRows = [
+  ['slot', 'role', 'wallet_address', 'drip_id', 'transaction_reference', 'status', 'network', 'recorded_at_utc'],
+];
+
 for (let slot = 1; slot <= count; slot += 1) {
   const address = createKeystore(stressTestSecret(slot), network).getBech32Address().toString();
+  const role = roles[(slot - 1) % roles.length];
+  const reference = stressTestReference(address, slot);
   rows.push([
     String(slot).padStart(2, '0'),
     'preprod_stress_test',
     'preprod',
-    roles[(slot - 1) % roles.length],
+    role,
     address,
-    stressTestReference(address, slot),
+    reference,
     'ADDRESS_READY_TX_PENDING',
     '',
     `FB-${String(slot).padStart(3, '0')}`,
+  ]);
+  proofRows.push([
+    String(slot).padStart(2, '0'),
+    role,
+    address,
+    '',
+    reference,
+    'ADDRESS_READY_TX_PENDING',
+    'preprod',
+    '',
   ]);
 }
 
 mkdirSync(dirname(outputPath), { recursive: true });
 writeFileSync(outputPath, `${rows.map((row) => row.map(csv).join(',')).join('\n')}\n`);
+writeFileSync(proofOutputPath, `${proofRows.map((row) => row.map(csv).join(',')).join('\n')}\n`);
 console.log(`Wrote ${count} Preprod stress-test addresses to ${outputPath}`);
+console.log(`Wrote ${count} pending transaction-proof rows to ${proofOutputPath}`);
 console.log('References are stress-test plan IDs. Replace them with confirmed transaction hashes after faucet funding and network submission.');
