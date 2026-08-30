@@ -6,7 +6,8 @@
 - [x] Add CI/CD workflow, deployment configuration, profile/readme links, and release checklist
 - [x] Initialize a focused git history with meaningful commits and verify the release locally
 - [x] Generate 50 format-valid offline wallet fixtures, 20 synthetic pilot-feedback records, and a one-minute Remotion demo
-- [ ] Collect real Preprod wallet addresses, deploy the contract/demo, publish GitHub/live/X/video links
+- [x] Publish the GitHub repository, live demo, and public demo-video link
+- [ ] Collect real Preprod wallet addresses, deploy the contract/demo, and create the Product X profile
 
 ## Release verification
 
@@ -36,7 +37,7 @@
 - Created public repository: https://github.com/SachPlayZ/proofroom
 - Added GitHub Actions verification + Pages deployment.
 - Added onboarding, feedback, evidence, deployment, release-link, issue, and PR templates.
-- Created a focused 20+ commit history and pushed `main`.
+- Created a focused 34-commit history and pushed `main`.
 
 - Added the Compact contract, typed fixtures, deterministic mock attesters, AES-GCM dossier encryption, role-based React UI, tests, and README.
 - Added attester registration and public one-time nullifiers to the contract.
@@ -59,7 +60,7 @@
 
 - Preprod deployment, wallet integration, generated Midnight.js bindings, and transaction/block evidence remain outstanding because no funded wallet or deployment credentials are present.
 - 50 verified Preprod participants, Product X profile, and demo video require real external participants/accounts and cannot be fabricated.
-- Generated wallet keys are deterministic demo fixtures and must never be funded; the CSV is not on-chain evidence. The rendered MP4 is local and still needs upload for a public submission link.
+- Generated wallet keys are deterministic demo fixtures and must never be funded; the CSV is not on-chain evidence. The rendered MP4 is public as a GitHub release asset, but still needs to be mirrored into the final submission form.
 - Attester signatures are deterministic mock fixtures; production signature verification still needs to be implemented inside the circuit.
 - Dossier ciphertext and key are memory-only in the demo.
 
