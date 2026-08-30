@@ -10,7 +10,7 @@ This file is intentionally a template until the contract is deployed and partici
 | Deployment block | _pending deployment_ |
 | Proof server version | _pin before deployment_ |
 | Midnight.js / SDK version | _pin before deployment_ |
-| CI run URL | <https://github.com/SachPlayZ/proofroom/actions/runs/33282341389> |
+| CI run URL | <https://github.com/SachPlayZ/proofroom/actions/runs/33282413354> |
 | Live demo URL | <https://sachplayz.github.io/proofroom/> |
 | Demo video URL | _add published video URL_ |
 
