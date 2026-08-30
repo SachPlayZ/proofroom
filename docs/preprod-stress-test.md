@@ -64,3 +64,4 @@ The proof CSV then includes `block_height`, `block_hash`, and `amount_raw` for e
 - Faucet submission smoke check: endpoint reached, invalid token rejected by Turnstile before any drip was created
 - Faucet submissions: not used for destinations (the external Turnstile gate remains separate)
 - Confirmed transaction hashes: 50 unique rows, independently verified against Preprod `SUCCESS` outputs; see [`pilot-transaction-proof.csv`](./pilot-transaction-proof.csv)
+- Confirmed block range: source faucet `2332287`; serial transfers `2333037`–`2333220`
