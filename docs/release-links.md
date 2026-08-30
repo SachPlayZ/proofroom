@@ -10,7 +10,7 @@ Replace each pending value only after it resolves publicly. Do not publish place
 | CI/CD workflow | <https://github.com/SachPlayZ/proofroom/actions/workflows/ci.yml> | configured |
 | Passing CI run | <https://github.com/SachPlayZ/proofroom/actions/runs/33282413354> | passed: tests, build, Compact, Pages |
 | Product X profile | _pending profile creation_ | blocked on X account |
-| Demo video | [`video/out/proofroom-demo.mp4`](../video/out/proofroom-demo.mp4) | local 60s Remotion render; upload pending |
+| Demo video | <https://github.com/SachPlayZ/proofroom/releases/download/v0.1.0/proofroom-demo.mp4> | public 60s Remotion render |
 | Demo script | [`demo-script.md`](./demo-script.md) | ready to record |
 | 50-user evidence | [`preprod-users.csv`](./preprod-users.csv) | 0/50 verified |
 | Offline wallet fixtures | [`pilot-wallets.csv`](./pilot-wallets.csv) | 50 format-valid addresses; 0 on-chain |
