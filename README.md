@@ -10,7 +10,7 @@ ProofRoom is a focused pre-diligence filter for small SaaS acquisitions. It demo
 
 ## Requirement status and evidence
 
-This is the submission matrix for the Level 4 baseline and Level 5 extension. `FULFILLED` means a reviewer can verify a public artifact now. `PARTIAL` means the core proof exists but one presentation/integration piece is still local. `PENDING` means it requires an external account or real participant action. Human operation is an off-chain operator attestation; the chain independently proves wallet activity, transaction status, and block references, not personhood.
+This is the submission matrix for the Level 4 baseline and Level 5 extension. `FULFILLED` means a reviewer can verify a public artifact now. `PARTIAL` means the core proof exists but one presentation/integration piece is still local. `PENDING` means it requires an external account or real participant action. `NOT VERIFIED` means the operator asserts completion but declined to publish the external proof. Human operation is an off-chain operator attestation; the chain independently proves wallet activity, transaction status, and block references, not personhood.
 
 ### Level 4 / baseline requirements
 
@@ -19,7 +19,7 @@ This is the submission matrix for the Level 4 baseline and Level 5 extension. `F
 | Working MVP live on Preprod (verifiable address) | **FULFILLED** | Compact contract `0e0d4b0200dc7faeb0412e3f874867809c6e118b354e3ad48d9b465e2a247237`; [deployment receipt](docs/proofroom-preprod-deployment.json); [50 live `createListing` receipts](docs/preprod-application-transactions.csv); run `npm run pilot:verify-app`. |
 | README + setup + usage | **FULFILLED** | This README; [deployment runbook](docs/deployment.md); [onboarding/usage](docs/onboarding.md). |
 | CI/CD pipeline running on the product repo | **FULFILLED** | [`.github/workflows/ci.yml`](.github/workflows/ci.yml); [passing run 33306462901](https://github.com/SachPlayZ/proofroom/actions/runs/33306462901). |
-| Product X profile created and linked | **PARTIAL — CREATED, LINK PENDING** | User confirms the profile exists; send the public handle/URL so it can be linked in [release-links.md](docs/release-links.md) and here. |
+| Product X profile created and linked | **PARTIAL — CREATED; LINK INTENTIONALLY OMITTED** | Operator confirms the profile exists but requested that no public handle/URL be added. Creation is recorded; the “linked” portion is not independently evidenced. |
 | Minimum 15 meaningful commits | **FULFILLED** | [public main history](https://github.com/SachPlayZ/proofroom/commits/main) contains more than 35 focused commits. |
 
 ### Level 4 / baseline submission checklist
@@ -29,7 +29,7 @@ This is the submission matrix for the Level 4 baseline and Level 5 extension. `F
 | Public GitHub repository | **FULFILLED** | [github.com/SachPlayZ/proofroom](https://github.com/SachPlayZ/proofroom). |
 | Live Preprod demo link + contract address | **PARTIAL** | [GitHub Pages demo](https://sachplayz.github.io/proofroom/) is live and labels its browser flow `LOCAL DEMO`; the real Preprod contract and application pass are independently verifiable in [preprod-evidence.md](docs/preprod-evidence.md) and the [receipt CSV](docs/preprod-application-transactions.csv). |
 | CI/CD badge or passing workflow | **FULFILLED** | Badge above, [workflow](.github/workflows/ci.yml), and [passing run](https://github.com/SachPlayZ/proofroom/actions/runs/33306462901). |
-| Product X profile link | **PARTIAL — URL PENDING** | Profile creation is confirmed by the operator; the public URL/handle is the only missing value. |
+| Product X profile link | **NOT VERIFIED — OMITTED BY REQUEST** | Profile creation is operator-confirmed; no public link is included by request. |
 | MVP demo video | **FULFILLED** | [Public 60-second Remotion render](https://github.com/SachPlayZ/proofroom/releases/download/v0.1.0/proofroom-demo.mp4), [source/commands](video/README.md), and [narration script](docs/demo-script.md). |
 | Minimum 15 meaningful commits | **FULFILLED** | [commit history](https://github.com/SachPlayZ/proofroom/commits/main). |
 
@@ -70,7 +70,7 @@ This is the submission matrix for the Level 4 baseline and Level 5 extension. `F
 | Source funding | Slot 01 faucet receipt + DUST registration in [preprod-source-funding.md](docs/preprod-source-funding.md). |
 | Fee sponsor disclosure | Slot 01 paid testnet DUST fees for slots 02–50; each application row's caller remains the distinct slot wallet. |
 
-The full evidence register is [`docs/preprod-evidence.md`](docs/preprod-evidence.md), and the submission handoff is [`docs/release-links.md`](docs/release-links.md). These files index the raw receipts; the CSVs are the machine-readable evidence, not generated placeholders. The only unresolved submission items are the public X URL, explicit participant consent/feedback records, real pilot feedback, and browser wallet wiring for a fully network-connected web demo.
+The full evidence register is [`docs/preprod-evidence.md`](docs/preprod-evidence.md), and the submission handoff is [`docs/release-links.md`](docs/release-links.md). These files index the raw receipts; the CSVs are the machine-readable evidence, not generated placeholders. The X profile is operator-confirmed but intentionally unlinked; remaining evidence gaps are explicit participant consent/feedback records, real pilot feedback, and browser wallet wiring for a fully network-connected web demo.
 
 ## What is implemented
 
@@ -217,7 +217,7 @@ PROOFROOM_CONTRACT_ADDRESS=0e0d4b0200dc7faeb0412e3f874867809c6e118b354e3ad48d9b4
 
 The runner keeps the public-ledger replay snapshot (`.proofroom-cache/slot-01-dust.json`) separate from the mutable fee-sponsor snapshot (`.proofroom-cache/slot-01-dust-app.json`, both ignored). This prevents replaying a locally spent DUST coin twice; if rebuilding after a run, use `PROOFROOM_DUST_FROM_START=1` with a fresh output file.
 
-The Product X public URL and explicit consent/feedback fields remain pending until supplied. The deterministic key derivation is a reproducibility detail; the operator confirms the 50 slots were used by human pilot participants.
+The Product X profile is operator-confirmed and intentionally unlinked. Explicit consent/feedback fields remain pending until supplied. The deterministic key derivation is a reproducibility detail; the operator confirms the 50 slots were used by human pilot participants.
 
 See [`docs/deployment.md`](docs/deployment.md) for the runbook and [`docs/release-links.md`](docs/release-links.md) for the submission gate.
 

@@ -9,7 +9,7 @@
 - [x] Regenerate stress-test docs/CSV and verify the dry-run path
 - [x] Publish the GitHub repository, live demo, and public demo-video link
 - [x] Rebuild the README as a complete evidence index and add the reproducible transaction-proof CSV
-- [ ] Add the created Product X public URL and any required explicit consent/feedback mapping (50 human-operated wallet slots confirmed by operator)
+- [ ] Add any required explicit participant consent/feedback mapping (50 human-operated wallet slots and Product X creation confirmed by operator; X link intentionally omitted)
 - [x] Confirm slot 01 funding and register its NIGHT output for DUST generation
 - [x] Fund slots 02–50 with 49 confirmed Preprod transfers and record indexer hashes/blocks
 - [x] Add reproducible stress-test runner, source-funding evidence, and README links
@@ -76,7 +76,7 @@
 
 ### Risks
 
-- The Product X profile exists but its public URL is not yet recorded; explicit consent/feedback mapping remains an external submission field.
+- The Product X profile exists per operator confirmation; its public URL is intentionally omitted. Explicit consent/feedback mapping remains an external submission field.
 - The faucet’s external Turnstile gate blocked direct batch drips; the confirmed run used the operator-funded slot-01 wallet and fee-paying RPC transfers instead.
 - The 50 wallet operators are human per operator confirmation; public on-chain evidence is complete, while personhood/consent remains an off-chain claim.
 - Generated wallet keys are deterministic for reproducibility and were operated by human pilot participants per operator confirmation; use only on Preprod and record confirmed hashes from the runner. The rendered MP4 is public as a GitHub release asset, but still needs to be mirrored into the final submission form.
@@ -85,7 +85,7 @@
 
 ### Follow-ups
 
-- Add the Product X handle/URL and copy any explicit opt-in consent/feedback mapping into the submission fields.
+- Copy any explicit opt-in consent/feedback mapping into the submission fields if the submission requires it.
 
 ## Active work
 
@@ -125,5 +125,5 @@ The funded source is slot 01. Its faucet transaction, DUST-registration transact
 
 ### Risks
 
-- Deterministic slots are reproducible key material; the operator confirms all 50 slots were human-operated pilot wallets. Product X URL and explicit consent/feedback fields remain external follow-ups.
+- Deterministic slots are reproducible key material; the operator confirms all 50 slots were human-operated pilot wallets. Product X creation is confirmed; its URL is intentionally omitted, and explicit consent/feedback fields remain external follow-ups.
 - Slot 01 sponsors DUST fees for the 49 other application calls; caller addresses remain distinct and public in the application CSV.

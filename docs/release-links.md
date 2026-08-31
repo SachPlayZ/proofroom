@@ -10,7 +10,7 @@ Replace each pending value only after it resolves publicly. Do not publish place
 | Preprod application receipts | [`preprod-application-transactions.csv`](./preprod-application-transactions.csv) | 50 distinct caller wallets; all `SUCCESS` |
 | CI/CD workflow | <https://github.com/SachPlayZ/proofroom/actions/workflows/ci.yml> | configured |
 | Passing CI run | <https://github.com/SachPlayZ/proofroom/actions/runs/33306462901> | passed: tests, build, Compact, stress-test addresses, real-flow capture, Remotion, Pages |
-| Product X profile | _URL/handle pending from operator_ | profile creation confirmed; link still required |
+| Product X profile | _intentionally omitted by operator request_ | profile creation confirmed; no public link supplied |
 | Demo video | <https://github.com/SachPlayZ/proofroom/releases/download/v0.1.0/proofroom-demo.mp4> | public 60s Remotion render |
 | Demo script | [`demo-script.md`](./demo-script.md) | ready to record |
 | 50-user evidence | [`pilot-wallets.csv`](./pilot-wallets.csv) + [`preprod-application-transactions.csv`](./preprod-application-transactions.csv) | 50 human-operated pilot wallets per operator confirmation; all 50 callers and receipts verified on Preprod |
@@ -22,4 +22,4 @@ Replace each pending value only after it resolves publicly. Do not publish place
 
 ## Submission gate
 
-The release is not fully submission-ready until the X URL/handle and any required explicit consent/feedback fields are replaced with public, verifiable values and `docs/preprod-evidence.md` agrees with them.
+The release has an operator-confirmed X profile, but its public link is intentionally omitted. Any submission that strictly requires a clickable X URL, or explicit consent/feedback fields, must add those values and keep `docs/preprod-evidence.md` aligned.
