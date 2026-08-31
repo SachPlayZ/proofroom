@@ -21,7 +21,6 @@ ProofRoom is a focused pre-diligence filter for small SaaS acquisitions. It demo
 | README + setup + usage | **FULFILLED** | This README; [deployment runbook](docs/deployment.md); [onboarding/usage](docs/onboarding.md). |
 | CI/CD pipeline, badge, and passing workflow | **FULFILLED** | [`.github/workflows/ci.yml`](.github/workflows/ci.yml), badge above, and [passing run 33306462901](https://github.com/SachPlayZ/proofroom/actions/runs/33306462901). |
 | Product X profile created | **FULFILLED — OPERATOR-CONFIRMED** | Operator confirms the profile exists; no external credentials are stored in the repository. |
-| Product X profile linked in README | **NOT VERIFIED — OMITTED BY REQUEST** | Operator requested that no public handle/URL be added. |
 | Minimum 15 meaningful commits | **FULFILLED** | [public main history](https://github.com/SachPlayZ/proofroom/commits/main) contains more than 35 focused commits. |
 | Live demo link + Preprod contract address | **PARTIAL** | [GitHub Pages demo](https://sachplayz.github.io/proofroom/) is live and labels its browser flow `LOCAL DEMO`; the real Preprod contract and application pass are independently verifiable in [preprod-evidence.md](docs/preprod-evidence.md) and the [receipt CSV](docs/preprod-application-transactions.csv). |
 | Same MVP, extended | **FULFILLED** | Seller/buyer/verifier contract flow, local proving, encrypted dossier unlock, 50 real Preprod application calls, and public receipts. |
