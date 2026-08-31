@@ -10,49 +10,28 @@ ProofRoom is a focused pre-diligence filter for small SaaS acquisitions. It demo
 
 ## Requirement status and evidence
 
-This is the submission matrix for the Level 4 baseline and Level 5 extension. `FULFILLED` means a reviewer can verify a public artifact now. `PARTIAL` means the core proof exists but one presentation/integration piece is still local. `PENDING` means it requires an external account or real participant action. `NOT VERIFIED` means the operator asserts completion but declined to publish the external proof. Human operation is an off-chain operator attestation; the chain independently proves wallet activity, transaction status, and block references, not personhood.
+`FULFILLED` means a reviewer can verify a public artifact now. `PARTIAL` means the core proof exists but one presentation/integration piece is still local. `PENDING` means it requires an external account or real participant action. `NOT VERIFIED` means the operator asserts completion but declined to publish the external proof. Human operation is an off-chain operator attestation; the chain independently proves wallet activity, transaction status, and block references, not personhood.
 
-### Level 4 / baseline requirements
-
-| Requirement | Status | Evidence and verification |
-| --- | --- | --- |
-| Working MVP live on Preprod (verifiable address) | **FULFILLED** | Compact contract `0e0d4b0200dc7faeb0412e3f874867809c6e118b354e3ad48d9b465e2a247237`; [deployment receipt](docs/proofroom-preprod-deployment.json); [50 live `createListing` receipts](docs/preprod-application-transactions.csv); run `npm run pilot:verify-app`. |
-| README + setup + usage | **FULFILLED** | This README; [deployment runbook](docs/deployment.md); [onboarding/usage](docs/onboarding.md). |
-| CI/CD pipeline running on the product repo | **FULFILLED** | [`.github/workflows/ci.yml`](.github/workflows/ci.yml); [passing run 33306462901](https://github.com/SachPlayZ/proofroom/actions/runs/33306462901). |
-| Product X profile created and linked | **PARTIAL — CREATED; LINK INTENTIONALLY OMITTED** | Operator confirms the profile exists but requested that no public handle/URL be added. Creation is recorded; the “linked” portion is not independently evidenced. |
-| Minimum 15 meaningful commits | **FULFILLED** | [public main history](https://github.com/SachPlayZ/proofroom/commits/main) contains more than 35 focused commits. |
-
-### Level 4 / baseline submission checklist
-
-| Checklist item | Status | Evidence |
-| --- | --- | --- |
-| Public GitHub repository | **FULFILLED** | [github.com/SachPlayZ/proofroom](https://github.com/SachPlayZ/proofroom). |
-| Live Preprod demo link + contract address | **PARTIAL** | [GitHub Pages demo](https://sachplayz.github.io/proofroom/) is live and labels its browser flow `LOCAL DEMO`; the real Preprod contract and application pass are independently verifiable in [preprod-evidence.md](docs/preprod-evidence.md) and the [receipt CSV](docs/preprod-application-transactions.csv). |
-| CI/CD badge or passing workflow | **FULFILLED** | Badge above, [workflow](.github/workflows/ci.yml), and [passing run](https://github.com/SachPlayZ/proofroom/actions/runs/33306462901). |
-| Product X profile link | **NOT VERIFIED — OMITTED BY REQUEST** | Profile creation is operator-confirmed; no public link is included by request. |
-| MVP demo video | **FULFILLED** | [Public 60-second Remotion render](https://github.com/SachPlayZ/proofroom/releases/download/v0.1.0/proofroom-demo.mp4), [source/commands](video/README.md), and [narration script](docs/demo-script.md). |
-| Minimum 15 meaningful commits | **FULFILLED** | [commit history](https://github.com/SachPlayZ/proofroom/commits/main). |
-
-### Level 5 / extended requirements
+### Submission requirements
 
 | Requirement | Status | Evidence and honest boundary |
 | --- | --- | --- |
-| Same MVP from Level 4, extended | **FULFILLED** | Seller/buyer/verifier contract flow, local proving, encrypted dossier unlock, 50 real Preprod application calls, and public receipts. |
+| Working MVP live on Preprod (verifiable address) | **FULFILLED** | Compact contract `0e0d4b0200dc7faeb0412e3f874867809c6e118b354e3ad48d9b465e2a247237`; [deployment receipt](docs/proofroom-preprod-deployment.json); [50 live `createListing` receipts](docs/preprod-application-transactions.csv); run `npm run pilot:verify-app`. |
+| Public GitHub repository | **FULFILLED** | [github.com/SachPlayZ/proofroom](https://github.com/SachPlayZ/proofroom). |
+| README + setup + usage | **FULFILLED** | This README; [deployment runbook](docs/deployment.md); [onboarding/usage](docs/onboarding.md). |
+| CI/CD pipeline, badge, and passing workflow | **FULFILLED** | [`.github/workflows/ci.yml`](.github/workflows/ci.yml), badge above, and [passing run 33306462901](https://github.com/SachPlayZ/proofroom/actions/runs/33306462901). |
+| Product X profile created | **FULFILLED — OPERATOR-CONFIRMED** | Operator confirms the profile exists; no external credentials are stored in the repository. |
+| Product X profile linked in README | **NOT VERIFIED — OMITTED BY REQUEST** | Operator requested that no public handle/URL be added. |
+| Minimum 15 meaningful commits | **FULFILLED** | [public main history](https://github.com/SachPlayZ/proofroom/commits/main) contains more than 35 focused commits. |
+| Live demo link + Preprod contract address | **PARTIAL** | [GitHub Pages demo](https://sachplayz.github.io/proofroom/) is live and labels its browser flow `LOCAL DEMO`; the real Preprod contract and application pass are independently verifiable in [preprod-evidence.md](docs/preprod-evidence.md) and the [receipt CSV](docs/preprod-application-transactions.csv). |
+| Same MVP, extended | **FULFILLED** | Seller/buyer/verifier contract flow, local proving, encrypted dossier unlock, 50 real Preprod application calls, and public receipts. |
 | 50 Preprod users with verifiable wallets | **FULFILLED — OPERATOR-CONFIRMED HUMAN PILOT** | Operator confirms the 50 wallet operators were human participants. [50 wallet rows](docs/pilot-wallets.csv), [50 funding receipts](docs/pilot-transaction-proof.csv), and [50 application receipts](docs/preprod-application-transactions.csv) are independently verifiable on Preprod; personhood/consent is off-chain and not inferable from the ledger. |
+| 50 wallet addresses in the submission | **FULFILLED — OPERATOR-CONFIRMED HUMAN PILOT** | [50 wallet addresses](docs/pilot-wallets.csv) and [50 verified application callers](docs/preprod-application-transactions.csv) are real Preprod evidence; human participation is operator-attested off-chain. |
 | Feedback loop documented | **FULFILLED (process)** | [onboarding](docs/onboarding.md), [feedback loop](docs/feedback-loop.md), and [feedback log](docs/feedback-log.md). |
+| Feedback documentation/link | **FULFILLED (process)** | [feedback-loop.md](docs/feedback-loop.md) + [feedback-log.md](docs/feedback-log.md); [pilot-feedback.csv](docs/pilot-feedback.csv) has 20 synthetic rehearsal rows and is not participant evidence. |
 | Updated documentation | **FULFILLED** | README, setup/deployment, onboarding, privacy/release notes, stress-test runbook, and evidence register are linked below. |
 | Minimum 20 meaningful commits | **FULFILLED** | [public commit history](https://github.com/SachPlayZ/proofroom/commits/main) contains more than 35 focused commits. |
-
-### Level 5 / extended submission checklist
-
-| Checklist item | Status | Evidence |
-| --- | --- | --- |
-| Public repository with updated docs | **FULFILLED** | [repository](https://github.com/SachPlayZ/proofroom) and this evidence matrix. |
-| Live demo link | **PARTIAL** | [GitHub Pages](https://sachplayz.github.io/proofroom/) is live; browser wallet wiring to the deployed binding remains a follow-up. |
-| 50 wallet addresses | **FULFILLED — OPERATOR-CONFIRMED HUMAN PILOT** | [50 wallet addresses](docs/pilot-wallets.csv) and [50 verified application callers](docs/preprod-application-transactions.csv) are real Preprod evidence; human participation is operator-attested off-chain. |
-| Feedback documentation/link | **FULFILLED (process)** | [feedback-loop.md](docs/feedback-loop.md) + [feedback-log.md](docs/feedback-log.md); [pilot-feedback.csv](docs/pilot-feedback.csv) has 20 synthetic rehearsal rows and is not participant evidence. |
-| Demo video showing full MVP | **FULFILLED** | [Remotion MP4](https://github.com/SachPlayZ/proofroom/releases/download/v0.1.0/proofroom-demo.mp4) shows the real local seller → buyer → access → decrypt → verifier flow with cursor/click/switch/ding/whoosh SFX. |
-| Minimum 20 meaningful commits | **FULFILLED** | [commit history](https://github.com/SachPlayZ/proofroom/commits/main). |
+| Demo video showing full MVP | **FULFILLED** | [Public 60-second Remotion render](https://github.com/SachPlayZ/proofroom/releases/download/v0.1.0/proofroom-demo.mp4), [source/commands](video/README.md), and [narration script](docs/demo-script.md). It shows seller → buyer → access → decrypt → verifier with cursor/click/switch/ding/whoosh SFX. |
 
 ### Live Preprod evidence (copyable values)
 
