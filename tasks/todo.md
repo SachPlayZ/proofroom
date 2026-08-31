@@ -9,7 +9,7 @@
 - [x] Regenerate stress-test docs/CSV and verify the dry-run path
 - [x] Publish the GitHub repository, live demo, and public demo-video link
 - [x] Rebuild the README as a complete evidence index and add the reproducible transaction-proof CSV
-- [ ] Collect real Preprod wallet addresses, deploy the contract/demo, and create the Product X profile
+- [ ] Collect 50 consented human Preprod wallet addresses and create the Product X profile (external accounts still required)
 - [x] Confirm slot 01 funding and register its NIGHT output for DUST generation
 - [x] Fund slots 02–50 with 49 confirmed Preprod transfers and record indexer hashes/blocks
 - [x] Add reproducible stress-test runner, source-funding evidence, and README links
@@ -76,7 +76,7 @@
 
 ### Risks
 
-- Compact contract deployment, generated Midnight.js integration, 50 consented human participant records, and the Product X profile remain outstanding.
+- 50 consented human participant records and the Product X profile remain outstanding external requirements; the Compact deployment/integration is complete.
 - The faucet’s external Turnstile gate blocked direct batch drips; the confirmed run used the operator-funded slot-01 wallet and fee-paying RPC transfers instead.
 - 50 verified Preprod participants and the Product X profile require real external participants/accounts; the demo video is now public as a release asset.
 - Generated wallet keys are deterministic stress-test keys; use only on Preprod and record confirmed hashes from the runner. The rendered MP4 is public as a GitHub release asset, but still needs to be mirrored into the final submission form.
@@ -85,8 +85,45 @@
 
 ### Follow-ups
 
-- Pin compatible Midnight.js/proof-server versions, wire managed bindings, and deploy the Compact contract to Preprod.
+- Collect opt-in participant evidence and create the Product X profile when those external accounts are available.
 
 ## Active work
 
-The funded source is slot 01. Its faucet transaction, DUST-registration transaction, and 49 serial child transfers are confirmed; contract deployment and consented participant evidence remain separate outstanding requirements.
+The funded source is slot 01. Its faucet transaction, DUST-registration transaction, and 49 serial child transfers are confirmed; contract deployment and 50 application calls are also verified. Consented participant evidence remains a separate outstanding requirement.
+
+## Application transaction pass
+
+- [x] Pin compatible Midnight.js/Compact runtime packages from the official Preprod examples
+- [x] Add a reproducible Preprod deployment and contract-call runner using the managed ProofRoom binding
+- [x] Deploy ProofRoom to Preprod and record the contract address/transaction reference
+- [x] Submit one real ProofRoom application call from each funded wallet; record only confirmed indexer evidence
+- [x] Independently verify application hashes, blocks, caller addresses, and public ledger fields
+- [x] Update README and release evidence to distinguish application calls from funding transfers
+
+## Application verification
+
+- [x] `npm run compact`
+- [x] `npm test`
+- [x] `npm run build`
+- [x] Preprod deployment and application-call runner complete without fabricated rows
+- [x] Indexer verification confirms every populated application row
+
+## Application pass review
+
+### Changed
+
+- Deployed ProofRoom to Preprod and ran `createListing` from all 50 deterministic stress-test caller wallets.
+- Added targeted indexer verification, retry-safe application batch runner, clean DUST replay, and password-safe local private-state encryption.
+- Updated the evidence README/registers with deployment and application receipt links.
+
+### Verified
+
+- `docs/preprod-application-transactions.csv`: 50 unique slots, 50 unique caller addresses, 50 `SUCCESS` rows.
+- `npm run pilot:verify-app`: every row matched its tx ID, contract action, SUCCESS status, block, and indexer ID.
+- `npm run pilot:verify`: all 50 funding rows independently re-resolved to SUCCESS outputs.
+- `npm run compact`, `npm test`, `npm run build`: passed.
+
+### Risks
+
+- Deterministic slots are testnet stress-test wallets, not 50 human participants; participant evidence and Product X remain external follow-ups.
+- Slot 01 sponsors DUST fees for the 49 other application calls; caller addresses remain distinct and public in the application CSV.

@@ -16,11 +16,22 @@
     "pilot:wallets": "node scripts/generate-pilot-wallets.mjs",
     "pilot:stress": "node scripts/run-preprod-stress-test.mjs",
     "pilot:dust-sync": "node scripts/sync-preprod-dust.mjs",
-    "pilot:verify": "node scripts/verify-preprod-transactions.mjs"
+    "pilot:verify": "node scripts/verify-preprod-transactions.mjs",
+    "pilot:deploy": "node scripts/deploy-proofroom-preprod.mjs deploy",
+    "pilot:app": "node scripts/deploy-proofroom-preprod.mjs create-listing",
+    "pilot:app:all": "node scripts/run-preprod-application-pass.mjs",
+    "pilot:register-dust": "node scripts/deploy-proofroom-preprod.mjs register-dust",
+    "pilot:verify-app": "node scripts/verify-preprod-application.mjs"
   },
   "dependencies": {
-    "@polkadot/api": "16.5.6",
-    "@midnight-ntwrk/ledger-v8": "8.0.3",
+    "@midnight-ntwrk/compact-js": "2.5.1",
+    "@midnight-ntwrk/compact-runtime": "0.16.0",
+    "@midnight-ntwrk/ledger-v8": "8.1.0",
+    "@midnight-ntwrk/midnight-js": "4.1.1",
+    "@midnight-ntwrk/midnight-js-http-client-proof-provider": "4.1.1",
+    "@midnight-ntwrk/midnight-js-indexer-public-data-provider": "4.1.1",
+    "@midnight-ntwrk/midnight-js-level-private-state-provider": "4.1.1",
+    "@midnight-ntwrk/midnight-js-node-zk-config-provider": "4.1.1",
     "@midnight-ntwrk/wallet-sdk-abstractions": "2.0.0",
     "@midnight-ntwrk/wallet-sdk-address-format": "3.1.0",
     "@midnight-ntwrk/wallet-sdk-dust-wallet": "3.0.0",
@@ -30,13 +41,14 @@
     "@midnight-ntwrk/wallet-sdk-prover-client": "1.2.0",
     "@midnight-ntwrk/wallet-sdk-shielded": "2.1.0",
     "@midnight-ntwrk/wallet-sdk-unshielded-wallet": "2.1.0",
+    "@polkadot/api": "16.5.6",
     "@vitejs/plugin-react": "6.1.1",
+    "graphql-ws": "6.2.1",
     "lucide-react": "1.37.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "typescript": "7.0.2",
     "vite": "8.2.2",
-    "graphql-ws": "6.2.1",
     "ws": "8.21.3"
   },
   "devDependencies": {
@@ -46,6 +58,6 @@
     "vitest": "4.1.11"
   },
   "overrides": {
-    "@midnight-ntwrk/ledger-v8": "8.0.3"
+    "@midnight-ntwrk/onchain-runtime-v3": "3.1.0"
   }
 }

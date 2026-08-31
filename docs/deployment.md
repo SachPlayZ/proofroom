@@ -25,4 +25,12 @@ Before deployment, pin compatible Midnight.js, Compact runtime, wallet, proof-se
 - proof-server and SDK versions;
 - explorer URLs.
 
-The current repository deliberately does not contain secrets, seed phrases, wallet credentials, or a fake deployment address.
+The current repository deliberately does not contain secrets, seed phrases, or wallet credentials. Start the local proving service used by the runner with the pinned image:
+
+```bash
+docker run --rm --name proofroom-proof-server -p 6300:6300 midnightntwrk/proof-server:8.1.0
+```
+
+The live Preprod deployment is recorded in [`proofroom-preprod-deployment.json`](./proofroom-preprod-deployment.json); application receipts are recorded in [`preprod-application-transactions.csv`](./preprod-application-transactions.csv) and must be refreshed only with `npm run pilot:verify-app`.
+
+The app runner uses a separate ignored sponsor snapshot (`.proofroom-cache/slot-01-dust-app.json`). Keep it separate from the replay snapshot so public DUST events are never applied twice.

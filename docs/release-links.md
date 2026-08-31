@@ -6,7 +6,8 @@ Replace each pending value only after it resolves publicly. Do not publish place
 | --- | --- | --- |
 | Public GitHub repository | <https://github.com/SachPlayZ/proofroom> | live |
 | Live demo | <https://sachplayz.github.io/proofroom/> | live GitHub Pages demo |
-| Preprod contract address | _pending funded deployment_ | blocked on wallet credentials |
+| Preprod contract address | `0e0d4b0200dc7faeb0412e3f874867809c6e118b354e3ad48d9b465e2a247237` | deployed; receipt in [`proofroom-preprod-deployment.json`](./proofroom-preprod-deployment.json) |
+| Preprod application receipts | [`preprod-application-transactions.csv`](./preprod-application-transactions.csv) | 50 distinct caller wallets; all `SUCCESS` |
 | CI/CD workflow | <https://github.com/SachPlayZ/proofroom/actions/workflows/ci.yml> | configured |
 | Passing CI run | <https://github.com/SachPlayZ/proofroom/actions/runs/33306462901> | passed: tests, build, Compact, stress-test addresses, real-flow capture, Remotion, Pages |
 | Product X profile | _pending profile creation_ | blocked on X account |

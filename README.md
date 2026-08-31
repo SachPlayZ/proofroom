@@ -16,10 +16,10 @@ This table is the source of truth for the Level 4/5 submission checklist. Values
 | --- | --- | --- |
 | Public repository | [github.com/SachPlayZ/proofroom](https://github.com/SachPlayZ/proofroom) | live |
 | Live demo | [sachplayz.github.io/proofroom](https://sachplayz.github.io/proofroom/) | live GitHub Pages demo |
-| Working Preprod contract | [Preprod evidence register](docs/preprod-evidence.md) | contract address pending funded deployment |
-| Contract/transaction references | [Transaction proof register](docs/pilot-transaction-proof.csv) | 50 confirmed Preprod wallet hashes; Compact contract deployment remains pending |
+| Working Preprod contract | [Preprod evidence register](docs/preprod-evidence.md) | deployed and verified on Midnight Preprod |
+| Contract/transaction references | [deployment](docs/proofroom-preprod-deployment.json), [application calls](docs/preprod-application-transactions.csv), [funding register](docs/pilot-transaction-proof.csv) | deployment + confirmed application/funding receipts |
 | 50 Preprod user addresses | [Participant evidence template](docs/preprod-users.csv) | 0/50 verified participant rows; do not confuse with stress-test addresses |
-| 50 separate stress-test wallets | [Pilot wallet set](docs/pilot-wallets.csv) | 50 distinct valid `mn_addr_preprod1...` addresses; slot 01 source funding confirmed |
+| 50 separate stress-test wallets | [Pilot wallet set](docs/pilot-wallets.csv) | 50 distinct valid `mn_addr_preprod1...` callers; funding + application receipts confirmed |
 | Feedback loop | [Feedback loop](docs/feedback-loop.md) + [feedback log](docs/feedback-log.md) | documented; pilot collection pending |
 | Structured feedback CSV | [Pilot feedback](docs/pilot-feedback.csv) | 20 synthetic rehearsal rows, explicitly not participant evidence |
 | Updated documentation | this README + [setup/deployment](docs/deployment.md) + [onboarding](docs/onboarding.md) | included |
@@ -117,7 +117,18 @@ The transfer runner submits finalized transactions through the Preprod RPC and p
 
 Slot 01's faucet funding (`55847e8cf1b4ab68596759cee6f847ee088b87c832d0caedbdb3dd1bd193718d`) and DUST registration (`e29d76daa081f9991bd4235e6131378c54020d2593da5432cffdea1124e65b98`) are independently recorded in [`docs/preprod-source-funding.md`](docs/preprod-source-funding.md).
 
-These 50 receipts are genuine Preprod wallet/RPC/indexer stress-test transactions. They are not represented as ProofRoom Compact contract calls; the contract address and application deployment remain pending.
+These 50 receipts are genuine Preprod wallet/RPC/indexer stress-test transactions. They are the source-to-child funding layer, not ProofRoom application calls. The deployed Compact contract and its application receipts are tracked separately in [`docs/proofroom-preprod-deployment.json`](docs/proofroom-preprod-deployment.json) and [`docs/preprod-application-transactions.csv`](docs/preprod-application-transactions.csv).
+
+### Live ProofRoom application pass
+
+The managed binding is deployed at `0e0d4b0200dc7faeb0412e3f874867809c6e118b354e3ad48d9b465e2a247237` on Preprod. `npm run pilot:app` submits the real `createListing` circuit, proves locally through the pinned proof server, waits for indexer confirmation, and appends a receipt. Use a distinct caller with the deterministic stress-test slot while slot 01 is the disclosed DUST fee sponsor for this testnet batch:
+
+```bash
+PROOFROOM_SLOT=3 PROOFROOM_DUST_SPONSOR_SLOT=1 npm run pilot:app
+npm run pilot:verify-app
+```
+
+The application CSV records only public transaction identifiers, caller addresses, contract address, status, block, timestamp, and indexer ID. It does not contain the private witness values. The fee-sponsor arrangement is a testnet operational detail: the circuit caller remains the slot wallet shown in the row, while DUST fees are paid by slot 01.
 
 For the required 50 *participant* wallets, collect consent and real wallet/transaction/block references in [`docs/preprod-users.csv`](docs/preprod-users.csv). The deterministic stress-test set is not a substitute for those participant rows.
 
@@ -151,15 +162,22 @@ The CI workflow repeats the deterministic checks, uploads the production artifac
 
 Video source and reproducible commands: [`video/README.md`](video/README.md). Submission/demo narration: [`docs/demo-script.md`](docs/demo-script.md).
 
-## Deployment handoff
+## Deployment and reproducibility
 
-Before calling the MVP a live Preprod deployment:
+The repository pins the working Preprod stack (Midnight.js 4.1.1, ledger-v8 8.1.0, Compact runtime 0.16.0, and `midnightntwrk/proof-server:8.1.0`). Re-run the deployment or attach to the recorded contract with:
 
-1. Pin Midnight.js, wallet SDK, proof-server, and Compact versions against the [compatibility matrix](https://github.com/midnightntwrk/midnight-sdk/blob/main/COMPATIBILITY.md).
-2. Generate bindings from `compact/managed/`, wire a funded wallet, and run proving locally.
-3. Deploy the single Compact contract to Preprod.
-4. Record the contract address, deployment transaction hash, block reference, proof-server version, and wallet-flow transaction hashes in [`docs/preprod-evidence.md`](docs/preprod-evidence.md) and [`docs/release-links.md`](docs/release-links.md).
-5. Replace pending X/profile and participant-evidence values only after they resolve publicly.
+```bash
+npm run compact
+npm run pilot:dust-sync
+npm run pilot:deploy
+PROOFROOM_CONTRACT_ADDRESS=0e0d4b0200dc7faeb0412e3f874867809c6e118b354e3ad48d9b465e2a247237 npm run pilot:deploy
+```
+
+`pilot:verify-app` independently checks every application row against the Preprod GraphQL indexer and refreshes the canonical regular transaction hash, block hash, timestamp, and indexer ID. Never add a receipt manually.
+
+The runner keeps the public-ledger replay snapshot (`.proofroom-cache/slot-01-dust.json`) separate from the mutable fee-sponsor snapshot (`.proofroom-cache/slot-01-dust-app.json`, both ignored). This prevents replaying a locally spent DUST coin twice; if rebuilding after a run, use `PROOFROOM_DUST_FROM_START=1` with a fresh output file.
+
+Product X and the 50 consented human participant rows remain intentionally pending until those external accounts/participants exist; the deterministic slots are explicitly a reproducible stress-test set.
 
 See [`docs/deployment.md`](docs/deployment.md) for the runbook and [`docs/release-links.md`](docs/release-links.md) for the submission gate.
 

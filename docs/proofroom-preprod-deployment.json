@@ -1,0 +1,13 @@
+{
+  "network": "preprod",
+  "contractAddress": "0e0d4b0200dc7faeb0412e3f874867809c6e118b354e3ad48d9b465e2a247237",
+  "transactionId": "008bccbd5d8073d7938015058b4651b028a39a2c23041907458ee0b93b344ff189",
+  "blockHeight": 2337901,
+  "recordedAtUtc": "2026-08-31T09:37:20.797Z",
+  "compiledContract": "proofroom",
+  "transactionHash": "22cf8a26b1270c72154ca376f5288f281507a92ece564738b7959e8db738007f",
+  "indexerId": 579515,
+  "status": "SUCCESS",
+  "blockHash": "5d29be9e8d51b4738f688c66dece0373907e2bbb87eeadcfd933ed2b5222dd5e",
+  "blockTimestampUtc": "2026-08-31T01:33:00.000Z"
+}

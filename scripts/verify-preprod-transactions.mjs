@@ -5,7 +5,7 @@ const indexerHttpUrl = process.env.MIDNIGHT_INDEXER_URL ?? 'https://indexer.prep
 const proofPath = resolve(process.cwd(), 'docs/pilot-transaction-proof.csv');
 const startHeight = Number(process.env.PROOFROOM_VERIFY_FROM ?? '2332287');
 const endHeight = Number(process.env.PROOFROOM_VERIFY_TO ?? '0');
-const concurrency = 12;
+const concurrency = 1;
 
 function parseCsvLine(line) {
   return line.split(',').map((value) => value.replace(/^"|"$/g, '').replaceAll('""', '"'));
@@ -16,14 +16,24 @@ function csv(value) {
 }
 
 async function query(body) {
-  const response = await fetch(indexerHttpUrl, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ query: body.query, variables: body.variables }),
-  });
-  const payload = await response.json();
-  if (!response.ok || payload.errors?.length) throw new Error(JSON.stringify(payload.errors ?? payload));
-  return payload.data;
+  let lastError;
+  for (let attempt = 0; attempt < 10; attempt += 1) {
+    try {
+      const response = await fetch(indexerHttpUrl, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ query: body.query, variables: body.variables }),
+      });
+      const text = await response.text();
+      const payload = JSON.parse(text);
+      if (!response.ok || payload.errors?.length) throw new Error(JSON.stringify(payload.errors ?? payload));
+      return payload.data;
+    } catch (error) {
+      lastError = error;
+      if (attempt < 9) await new Promise((resolvePromise) => setTimeout(resolvePromise, 3000 * (attempt + 1)));
+    }
+  }
+  throw lastError;
 }
 
 const lines = readFileSync(proofPath, 'utf8').trim().split('\n');
@@ -32,16 +42,23 @@ const records = lines.map(parseCsvLine).map((values) => Object.fromEntries(origi
 const targets = new Map(records.filter((record) => record.transaction_reference).map((record) => [record.transaction_reference, record]));
 if (targets.size !== records.length) throw new Error('Every proof row must have a unique transaction_reference before verification');
 
-const latest = await query({ query: 'query { block(offset: null) { height } }' });
-const finalHeight = endHeight || latest.block.height;
+// Confirmed registers already contain block heights. Prefer those targeted
+// reads so verification stays fast and does not hammer the public indexer with
+// thousands of unrelated block queries. Fall back to the historical range for
+// older/pending registers that do not yet have block evidence.
+const targetedHeights = [...new Set(records.map((record) => Number(record.block_height)).filter((height) => Number.isInteger(height) && height > 0))];
+const heights = targetedHeights.length === records.length ? targetedHeights : null;
+const latest = heights ? null : await query({ query: 'query { block(offset: null) { height } }' });
+const finalHeight = endHeight || (latest?.block.height ?? Math.max(...targetedHeights));
 if (finalHeight < startHeight) throw new Error(`Invalid block range ${startHeight}..${finalHeight}`);
 
-let nextHeight = startHeight;
+let nextHeight = heights ? 0 : startHeight;
 async function worker() {
   while (true) {
-    const height = nextHeight;
+    const index = nextHeight;
     nextHeight += 1;
-    if (height > finalHeight) return;
+    const height = heights ? heights[index] : index;
+    if (height === undefined || (!heights && height > finalHeight)) return;
     const data = await query({
       query: `query($o: BlockOffset) {
         block(offset: $o) {
@@ -84,4 +101,3 @@ const headers = [
 const rows = [headers, ...records.map((record) => headers.map((header) => record[header] ?? ''))];
 writeFileSync(proofPath, `${rows.map((row) => row.map(csv).join(',')).join('\n')}\n`);
 console.log(`Verified ${records.length} SUCCESS transactions and wrote block evidence to ${proofPath}`);
-
